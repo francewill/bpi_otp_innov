@@ -18,7 +18,9 @@ js/data.js          constants (MISSION, BILLERS, TIERS, PATTERN…) + $ / ic / p
 js/state.js         S (global state), fresh(), mtype/dstatus/todayDone
 js/nav.js           go/back/setStack/paint, toast, openSheet/closeSheet
 js/dropzone.js      shared file-drop widget (dropField/wireDropzone) — used by screen-supp.js + screen-apply.js
-js/screen-*.js       one file per screen (home, hub, pay, learn, success, redeem, supp, apply, inst)
+js/screen-*.js       one file per screen (home, hub, pay, learn, success, redeem, supp, apply, inst,
+                     ploan, loan — screen-loan.js is shared by auto/housing/moto via S.loanKind,
+                     all three quest-eligible like everything else)
 js/guide.js         side-panel walkthrough + demo shortcuts (demoGo/demoType/reset)
 js/actions.js       `A` click-dispatch table + the 3 document-level event listeners
 js/main.js          RENDER map + the bootstrap paint(true) call — must load LAST
@@ -35,13 +37,22 @@ js/main.js          RENDER map + the bootstrap paint(true) call — must load LA
   `data-act`/`data-*` attributes and dispatching through the `A` object —
   never attach one-off `addEventListener`s inside render functions.
 - Conditionally-eligible missions (`supp`/`inst` gated on `S.hasCard`, `apply`
-  gated on `!S.hasCard`) follow the `elig()`/`suppElig()`/`applyElig()`/
-  `instElig()` pattern: a pure function returning `{counts, tone, icon, msg}`
-  that both the quest card and the mission screen read, so "does this count
-  today" logic lives in exactly one place.
+  gated on `!S.hasCard`; `ploan`/`auto`/`housing`/`moto` ungated — loans
+  aren't tied to card ownership) follow the `elig()`/`suppElig()`/
+  `applyElig()`/`instElig()`/`ploanElig()`/`loanElig(kind)` pattern: a pure
+  function returning `{counts, tone, icon, msg}` that both the quest card
+  and the mission screen read, so "does this count today" logic lives in
+  exactly one place. `loanElig(kind)` is the parameterized variant, shared
+  by `auto`/`housing`/`moto` since they're one screen (`screen-loan.js`).
 - `S.ccRoute` ('pq'/'regular'/'express') simulates the bank's eligibility
-  algorithm for the `apply` mission — a demo toggle in the guide panel, not
-  real logic. Preserved across `reset()` the same way `S.hasCard` is.
+  algorithm for the `apply` mission, `S.loanRoute` ('pq'/'regular') does the
+  same for `ploan` — both are demo toggles in the guide panel, not real
+  logic, and both are preserved across `reset()` the same way `S.hasCard` is.
+- Every mission today is part of the points economy (same +100 pts/+1 stamp,
+  except `learn` at +50/0). `updateSuccess()` still has an `S.result.noReward`
+  escape hatch (skips the whole reward-card block for a plain confirmation)
+  for if a future action is deliberately **not** meant to be scored — nothing
+  currently sets it.
 
 ## Load-order gotcha
 `js/main.js` defines the `RENDER` map (`{home:renderHome, hub:renderHub, ...}`)

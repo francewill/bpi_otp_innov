@@ -9,6 +9,8 @@ function startMission(){
   else if(t==='supp'){if(!S.hasCard)return;go('supp');}
   else if(t==='apply'){if(S.hasCard)return;go('apply');}
   else if(t==='inst'){if(!S.hasCard)return;go('inst');}
+  else if(t==='ploan'){go('ploan');}
+  else if(t==='auto'||t==='housing'||t==='moto'){S.loanKind=t;go('loan');}
   else{S.pay=mkPay(t);go('pay');}
 }
 function renderScan(){

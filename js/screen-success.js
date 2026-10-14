@@ -7,6 +7,13 @@ function sucHead(){
     if(r.route==='express')return ['Card approved!',`${peso(r.holdAmount||0,0)} is now on hold in your Savings Account as collateral.`];
     return ['You’re approved!',`Your BPI credit card with a ${peso(PQ_LIMIT,0)} limit is on its way.`];
   }
+  if(r.type==='ploan'){
+    if(r.route==='regular')return ['Application submitted!','We’ll review your documents and get back to you within 3–5 business days.'];
+    return ['You’re approved!',`Your ${peso(r.amount||0,0)} personal loan is being processed for release.`];
+  }
+  if(LOAN_KINDS[r.type]){
+    return ['Application submitted!',`We’ll review your ${LOAN_KINDS[r.type].label} application and documents within 3–5 business days.`];
+  }
   const map={qr:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],bill:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],save:['Money saved!',`${peso(r.amount||0)} moved to ${r.payee}`],learn:['Nice work!','You finished today’s money tip'],supp:['Application submitted!','We’ll review it and activate your supplementary card.'],inst:['Installment set up!',`${r.merchant} · ${peso(r.monthly||0)}/month for ${r.tenor} months`]};
   return map[r.type];
 }
@@ -18,6 +25,11 @@ function renderSuccess(){
 }
 function updateSuccess(first){
   const r=S.result;if(!r)return;
+  if(r.noReward){
+    $('#rwWrap').innerHTML='';
+    $('#sucFoot').innerHTML=`<button class="btn btn-red btn-block" data-act="goHome">Go to accounts</button>`;
+    return;
+  }
   const e=r.counts?S.ledger.find(x=>x.id===r.entry):null;
   const conf=e&&e.status==='confirmed',unlocked=conf&&S.pts>=20000;
   const m=MISSION[r.type],left=5-S.stamps;

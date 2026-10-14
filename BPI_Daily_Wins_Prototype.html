@@ -37,6 +37,9 @@
   <symbol id="i-bulb" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.500 10.900c.6.500 1 1.200 1 2.100h5c0-.9.400-1.600 1-2.100A6 6 0 0 0 12 3z"/></symbol>
   <symbol id="i-minus" viewBox="0 0 24 24"><path d="M7 12h10"/></symbol>
   <symbol id="i-card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2.5"/><path d="M2 10h20"/><path d="M5.5 15h4"/></symbol>
+  <symbol id="i-car" viewBox="0 0 24 24"><path d="M3.500 16 5 11a2 2 0 0 1 1.900-1.400h10.200A2 2 0 0 1 19 11l1.500 5"/><rect x="2" y="16" width="20" height="4" rx="1.500"/><circle cx="7" cy="20" r="1.600"/><circle cx="17" cy="20" r="1.600"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.500 12 4l8 7.500"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol>
+  <symbol id="i-moto" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h5l2-5h4M13 12l2 5M9 17l3-6"/></symbol>
 </svg>
 
 <main class="stage">
@@ -172,6 +175,28 @@
       <div class="foot" id="instFoot"></div>
     </section>
 
+    <!-- PERSONAL LOAN -->
+    <section class="screen" id="s-ploan" aria-label="Personal loan">
+      <div class="appbar">
+        <button class="ib" data-act="back" aria-label="Back"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+        <h2>Personal loan</h2>
+        <span class="ib"></span>
+      </div>
+      <div class="scroll"><div class="stack" id="ploanBody"></div></div>
+      <div class="foot" id="ploanFoot"></div>
+    </section>
+
+    <!-- AUTO / HOUSING / MOTORCYCLE LOAN -->
+    <section class="screen" id="s-loan" aria-label="Loan application">
+      <div class="appbar">
+        <button class="ib" data-act="back" aria-label="Back"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+        <h2 id="loanTitle">Loan</h2>
+        <span class="ib"></span>
+      </div>
+      <div class="scroll"><div class="stack" id="loanBody"></div></div>
+      <div class="foot" id="loanFoot"></div>
+    </section>
+
     <div class="sheet-wrap" id="sheet" aria-hidden="true">
       <div class="scrim" data-act="closeSheet"></div>
       <div class="sheet" role="dialog" aria-modal="true" id="sheetBody"></div>
@@ -195,6 +220,8 @@
 <script src="js/screen-supp.js"></script>
 <script src="js/screen-apply.js"></script>
 <script src="js/screen-inst.js"></script>
+<script src="js/screen-ploan.js"></script>
+<script src="js/screen-loan.js"></script>
 <script src="js/guide.js"></script>
 <script src="js/actions.js"></script>
 <script src="js/main.js"></script>

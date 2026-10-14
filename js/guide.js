@@ -14,7 +14,7 @@ function guideHTML(){
       <li><button data-act="demoGo" data-v="4"><span class="n">4</span><span><b>Convert points to cashback</b><small>Confirm and see the credit</small></span></button></li>
     </ol>
     <h3>Try today’s mission as</h3>
-    <div class="seg4">${['qr','bill','save','learn','supp','apply','inst'].map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
+    <div class="seg4">${['qr','bill','save','learn','supp','apply','inst','ploan','auto','housing','moto'].map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
     <h3>Credit card status</h3>
     <div class="seg4">
       <button class="${S.hasCard?'on':''}" data-act="cardMode" data-v="1">Cardholder</button>
@@ -27,16 +27,22 @@ function guideHTML(){
       <button class="${S.ccRoute==='express'?'on':''}" data-act="ccRoute" data-v="express">Express Start</button>
     </div>
     <p class="fine">Normally chosen automatically by BPI’s eligibility engine based on the applicant’s history. This toggle previews each path.</p>
+    <h3>Personal loan route</h3>
+    <div class="seg4">
+      <button class="${S.loanRoute==='pq'?'on':''}" data-act="loanRoute" data-v="pq">Pre-qualified</button>
+      <button class="${S.loanRoute==='regular'?'on':''}" data-act="loanRoute" data-v="regular">Regular</button>
+    </div>
     <button class="ghost" data-act="demoReset">Reset demo</button>
     <p class="fine">Illustrative values only: 100 pts = ₱5. Not connected to real accounts. Finance validates actual rewards and costs.</p>
   </div>`;
 }
 function renderPanel(){$('#panel').innerHTML=guideHTML();}
 function reset(tt){
-  const hc=S.hasCard,route=S.ccRoute;
+  const hc=S.hasCard,route=S.ccRoute,loanRoute=S.loanRoute;
   S=fresh(tt);
   S.hasCard=hc===undefined?true:hc;
   S.ccRoute=route||'pq';
+  S.loanRoute=loanRoute||'pq';
   closeSheet();paint(true);
 }
 function demoGo(n){

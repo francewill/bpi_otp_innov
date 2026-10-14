@@ -9,7 +9,7 @@ function renderHome(){
     : slide({t:'Today’s Daily Win',d:`${m.desc.replace('.','')} to earn ${m.pts} pts${m.stamp?' + 1 stamp':''}.`,l:'Explore my mission',act:'go',attr:'data-to="hub"',ill:ic('gift')});
   const s2=slide({t:'Have a look at your inbox',d:'Check out the personal finance insights that you have so far',l:'Go to Insights Inbox',act:'toast',attr:'data-msg="Insights Inbox is not part of this prototype"',ill:ic('wallet')+''});
   const s3=slide({t:'Pay your bills with ease',d:'Set up auto-pay for Meralco, Maynilad and more',l:'Set up auto-pay',act:'toast',attr:'data-msg="Auto-pay is not part of this prototype"',ill:ic('bill')});
-  const titles={deposits:'Deposits',investments:'Investments',cards:'Cards',rewards:'Rewards'};
+  const titles={deposits:'Deposits',investments:'Investments',cards:'Cards',loans:'Loans',rewards:'Rewards'};
   let content='';
   if(S.chip==='deposits'){
     const bal=S.showBal?`PHP <b class="num">${fmt(S.balance)}</b>`:'PHP <b>••••••••</b>';
@@ -24,6 +24,10 @@ function renderHome(){
         <button class="card tile" data-act="go" data-to="inst"><span class="tile-ic">${ic('card')}</span><span class="tile-tx"><b>Switch a purchase to installment</b><small>Spread a big purchase over 3, 6, or 12 months</small></span>${ic('chev-r')}</button>
         <button class="card tile" data-act="go" data-to="supp"><span class="tile-ic">${ic('card')}</span><span class="tile-tx"><b>Add a supplementary card</b><small>Share your credit limit with family · Free for your first card</small></span>${ic('chev-r')}</button>`
       :`<button class="card tile" data-act="go" data-to="apply"><span class="tile-ic">${ic('card')}</span><span class="tile-tx"><b>You may be eligible for a BPI credit card</b><small>Takes less than a minute to check</small></span>${ic('chev-r')}</button>`;
+  }else if(S.chip==='loans'){
+    content=`<button class="card tile feat" data-act="go" data-to="ploan"><span class="tile-ic">${ic('wallet')}</span><span class="tile-tx"><b>Personal Loan</b><small>Pre-qualified offers available · No income docs needed for PQ</small></span>${ic('chev-r')}</button>
+      <p class="muted" style="font-size:14px;padding:4px 2px 0">Other loans</p>
+      ${Object.entries(LOAN_KINDS).map(([k,v])=>`<button class="card tile" data-act="goLoan" data-kind="${k}"><span class="tile-ic">${ic(v.icon)}</span><span class="tile-tx"><b>${v.label}</b><small>Subject to credit evaluation and approval</small></span>${ic('chev-r')}</button>`).join('')}`;
   }else{
     content=`<div class="card empty"><b>No cards to show</b><p>Your credit and debit cards will show up here.</p></div>`;
   }

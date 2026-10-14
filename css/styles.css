@@ -162,6 +162,8 @@ input{font:inherit}
 .tile-pts{text-align:right;display:flex;flex-direction:column;line-height:1.1}
 .tile-pts b{font-size:19px;font-weight:700}
 .tile-pts small{font-size:13px;color:var(--ink-2)}
+.tile.feat{background:var(--red-tint)}
+.tile.feat .tile-ic{background:var(--red);color:#fff}
 .empty{text-align:center;padding:28px 20px;display:flex;flex-direction:column;gap:6px;align-items:center}
 .empty b{font-size:17px}
 .empty p{color:var(--ink-2);font-size:15px}
