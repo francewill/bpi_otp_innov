@@ -40,6 +40,7 @@
   <symbol id="i-car" viewBox="0 0 24 24"><path d="M3.500 16 5 11a2 2 0 0 1 1.900-1.400h10.200A2 2 0 0 1 19 11l1.500 5"/><rect x="2" y="16" width="20" height="4" rx="1.500"/><circle cx="7" cy="20" r="1.600"/><circle cx="17" cy="20" r="1.600"/></symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.500 12 4l8 7.500"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol>
   <symbol id="i-moto" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h5l2-5h4M13 12l2 5M9 17l3-6"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 7-8"/><path d="M15 6h4v4"/></symbol>
 </svg>
 
 <main class="stage">
@@ -197,6 +198,28 @@
       <div class="foot" id="loanFoot"></div>
     </section>
 
+    <!-- BPI WEALTH: APPLY FOR UITF / ALFM -->
+    <section class="screen" id="s-fundApply" aria-label="Investment fund application">
+      <div class="appbar">
+        <button class="ib" data-act="back" aria-label="Back"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+        <h2 id="fundApplyTitle">Fund</h2>
+        <span class="ib"></span>
+      </div>
+      <div class="scroll"><div class="stack" id="fundApplyBody"></div></div>
+      <div class="foot" id="fundApplyFoot"></div>
+    </section>
+
+    <!-- BPI WEALTH: DEPOSIT MORE -->
+    <section class="screen" id="s-fundDeposit" aria-label="Deposit to investment fund">
+      <div class="appbar">
+        <button class="ib" data-act="back" aria-label="Back"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+        <h2 id="fundDepositTitle">Deposit</h2>
+        <span class="ib"></span>
+      </div>
+      <div class="scroll"><div class="stack" id="fundDepositBody"></div></div>
+      <div class="foot" id="fundDepositFoot"></div>
+    </section>
+
     <div class="sheet-wrap" id="sheet" aria-hidden="true">
       <div class="scrim" data-act="closeSheet"></div>
       <div class="sheet" role="dialog" aria-modal="true" id="sheetBody"></div>
@@ -222,6 +245,7 @@
 <script src="js/screen-inst.js"></script>
 <script src="js/screen-ploan.js"></script>
 <script src="js/screen-loan.js"></script>
+<script src="js/screen-fund.js"></script>
 <script src="js/guide.js"></script>
 <script src="js/actions.js"></script>
 <script src="js/main.js"></script>

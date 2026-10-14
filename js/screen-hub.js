@@ -47,6 +47,7 @@ function questCard(d){
   if(st==='today'){
     if((t==='supp'||t==='inst')&&!S.hasCard)act=`<div class="q-state">${ic('info','md')}Available to BPI credit cardholders. Try the “Cardholder” toggle in the prototype guide.</div>`;
     else if(t==='apply'&&S.hasCard)act=`<div class="q-state ok">${ic('check','md')}You already have a BPI credit card.</div>`;
+    else if((t==='uitf'||t==='alfm')&&S.hasFund)act=`<div class="q-state ok">${ic('check','md')}You already have a BPI Wealth investment account.</div>`;
     else act=`<button class="btn btn-red btn-block" data-act="start">${m.cta}</button>`;
   }
   else if(st==='done')act=`<div class="q-state ok">${ic('check','md')}Completed · ${m.pts} pts earned</div>`;

@@ -7,6 +7,8 @@ function fresh(tt){
     balance:48250.75,goal:12400,showBal:false,
     pts:19900,pendingPts:0,stamps:1,streak:3,lastStamp:false,hasCard:true,ccRoute:'pq',holdAmt:MIN_HOLD,instSel:0,instTenor:TENORS[0],
     loanRoute:'pq',loanBiz:false,loanKind:'auto',
+    hasFund:true,fundKind:'uitf',fundMarital:0,fundJob:0,fundIncome:0,fundDepositAmt:FUND_DEP_QUICK[0],
+    fundHoldings:{uitf:{invested:20000,value:21850},alfm:{invested:15000,value:14100}},
     done:new Set([1,2,3,4,5,6,8,9,11,12,13]),
     check:{salary:true,bill:tt!=='bill',pay:false,save:false},
     ledger:[11,12,13].concat([9,8,6,5,4,3,2,1]).sort((a,b)=>b-a).map(d=>({id:d,title:MISSION[PATTERN[d-1]].name,date:'Nov '+d,pts:MISSION[PATTERN[d-1]].pts,status:'confirmed'}))

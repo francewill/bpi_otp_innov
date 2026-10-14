@@ -30,6 +30,15 @@ const A={
   submitPloan:()=>submitPloan(),
   goLoan:d=>{S.loanKind=d.kind;go('loan');},
   submitLoan:()=>submitLoan(),
+  fundMode:d=>{S.hasFund=d.v==='1';paint(false);},
+  goFund:d=>{if(S.hasFund)return;S.fundKind=d.kind;go('fundApply');},
+  goFundDeposit:d=>{S.fundKind=d.kind;S.fundDepositAmt=FUND_DEP_QUICK[0];go('fundDeposit');},
+  fundMarital:d=>{S.fundMarital=+d.i;renderFundApply();},
+  fundJob:d=>{S.fundJob=+d.i;renderFundApply();},
+  fundIncome:d=>{S.fundIncome=+d.i;renderFundApply();},
+  submitFundApply:()=>submitFundApply(),
+  fundDepQuick:d=>{S.fundDepositAmt=+d.v;$('#fundDepAmt').value=d.v;fundDepDyn();},
+  submitFundDeposit:()=>submitFundDeposit(),
   closeSheet:()=>closeSheet(),
   goHub:()=>{S.tab='quests';S.selected=S.today;setStack(['home','hub']);},
   goHome:()=>setStack(['home']),
@@ -45,11 +54,12 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('input',e=>{
   const id=e.target.id;
-  if(id!=='amt'&&id!=='holdAmt')return;
+  if(id!=='amt'&&id!=='holdAmt'&&id!=='fundDepAmt')return;
   let v=e.target.value.replace(/[^0-9.]/g,'');const i=v.indexOf('.');if(i>-1)v=v.slice(0,i+1)+v.slice(i+1).replace(/\./g,'');
   const parts=v.split('.');if(parts[1]&&parts[1].length>2)v=parts[0]+'.'+parts[1].slice(0,2);
   e.target.value=v;
   if(id==='amt'){S.pay.amount=parseFloat(v)||0;payDyn();}
-  else{S.holdAmt=parseFloat(v)||0;applyDyn();}
+  else if(id==='holdAmt'){S.holdAmt=parseFloat(v)||0;applyDyn();}
+  else{S.fundDepositAmt=parseFloat(v)||0;fundDepDyn();}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});

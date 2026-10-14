@@ -14,6 +14,12 @@ function sucHead(){
   if(LOAN_KINDS[r.type]){
     return ['Application submitted!',`We’ll review your ${LOAN_KINDS[r.type].label} application and documents within 3–5 business days.`];
   }
+  if(FUNDS[r.type]){
+    return ['You’re in!',`Your ${FUNDS[r.type].label} account is being set up. You can start investing right in the app.`];
+  }
+  if(r.type==='fundDeposit'){
+    return ['Deposit successful!',`${peso(r.amount||0)} added to your ${FUNDS[r.kind].label} investment.`];
+  }
   const map={qr:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],bill:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],save:['Money saved!',`${peso(r.amount||0)} moved to ${r.payee}`],learn:['Nice work!','You finished today’s money tip'],supp:['Application submitted!','We’ll review it and activate your supplementary card.'],inst:['Installment set up!',`${r.merchant} · ${peso(r.monthly||0)}/month for ${r.tenor} months`]};
   return map[r.type];
 }

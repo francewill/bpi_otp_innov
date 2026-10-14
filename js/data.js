@@ -21,7 +21,9 @@ const MISSION={
   ploan:{name:'Apply for a personal loan',short:'Personal loan',desc:'See if you’re pre-qualified for a personal loan — your path depends on your BPI history.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'wallet'},
   auto:{name:'Apply for an auto loan',short:'Auto loan',desc:'Finance a car purchase — subject to credit evaluation and approval.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'car'},
   housing:{name:'Apply for a housing loan',short:'Housing loan',desc:'Finance a home purchase — subject to credit evaluation and approval.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'home'},
-  moto:{name:'Apply for a motorcycle loan',short:'Moto loan',desc:'Finance a motorcycle purchase — subject to credit evaluation and approval.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'moto'}
+  moto:{name:'Apply for a motorcycle loan',short:'Moto loan',desc:'Finance a motorcycle purchase — subject to credit evaluation and approval.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'moto'},
+  uitf:{name:'Apply for a UITF fund',short:'UITF',desc:'Start investing in a BPI Unit Investment Trust Fund — no forms, just a few questions.',min:0,pts:100,stamp:1,cta:'Apply now',icon:'chart'},
+  alfm:{name:'Apply for an ALFM fund',short:'ALFM',desc:'Start investing in an ALFM Mutual Fund — no forms, just a few questions.',min:0,pts:100,stamp:1,cta:'Apply now',icon:'chart'}
 };
 const MIN_HOLD=5000;      // Express Start minimum hold amount
 const PQ_LIMIT=80000;     // illustrative pre-qualified credit limit
@@ -38,6 +40,16 @@ const LOAN_KINDS={
   housing:{label:'Housing Loan',icon:'home'},
   moto:{label:'Motorcycle Loan',icon:'moto'}
 };
+// BPI Wealth (investment). Static label/icon only — the mutable invested/
+// value figures per fund live in S.fundHoldings (state.js), not here.
+const FUNDS={
+  uitf:{label:'UITF',full:'Unit Investment Trust Fund',icon:'chart'},
+  alfm:{label:'ALFM',full:'ALFM Mutual Fund',icon:'chart'}
+};
+const FUND_DEP_QUICK=[1000,5000,10000];
+const MARITAL=['Single','Married','Widowed','Separated'];
+const JOB_NATURE=['Employed','Self-employed','Business owner','OFW','Retired'];
+const INCOME_BRACKETS=['Below ₱20,000','₱20,000 – ₱49,999','₱50,000 – ₱99,999','₱100,000 and above'];
 const PATTERN=['qr','learn','bill','save','qr','learn','qr','learn','bill','save','qr','learn','bill','qr','save','learn','qr','bill','save','learn','qr','learn','bill','qr','save','learn','qr','bill','learn','save'];
 const BILLERS=[{n:'Meralco',k:'Electricity',a:1850},{n:'Maynilad',k:'Water',a:640},{n:'PLDT Home',k:'Internet',a:1299}];
 const TIERS=[{c:100,p:2000},{c:250,p:5000},{c:500,p:10000},{c:1000,p:20000}];   // 100 pts = ₱5

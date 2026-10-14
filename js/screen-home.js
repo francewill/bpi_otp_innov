@@ -17,7 +17,19 @@ function renderHome(){
   }else if(S.chip==='rewards'){
     content=dwTile()+`<button class="card tile" data-act="go" data-to="redeem" ${S.pts<2000?'disabled':''}><span class="tile-ic">${ic('cash')}</span><span class="tile-tx"><b>Convert to cashback</b><small>100 pts = ₱5, credited to your savings</small></span>${ic('chev-r')}</button>`;
   }else if(S.chip==='investments'){
-    content=`<div class="card empty"><b>No investments yet</b><p>Funds you invest in will show up here.</p></div>`;
+    content=S.hasFund
+      ?Object.entries(FUNDS).map(([k,f])=>{
+          const h=S.fundHoldings[k],gain=h.value-h.invested,up=gain>=0,pct=h.invested?Math.abs(gain/h.invested*100).toFixed(1):'0.0';
+          return `<div class="card"><div class="row-b"><h4>${f.full}</h4><span class="pill">${f.label}</span></div>
+            <div class="rows" style="margin-top:8px">
+              <div><span>Amount invested</span><b class="num">${peso(h.invested)}</b></div>
+              <div><span>Current value</span><b class="num">${peso(h.value)}</b></div>
+              <div><span>Unrealized ${up?'gain':'loss'}</span><b class="num ${up?'g':'r'}">${up?'+':'−'}${peso(Math.abs(gain))} (${up?'+':'−'}${pct}%)</b></div>
+            </div>
+            <button class="btn btn-red btn-block" style="margin-top:12px" data-act="goFundDeposit" data-kind="${k}">Deposit more</button></div>`;
+        }).join('')
+      :`<button class="card tile" data-act="goFund" data-kind="uitf"><span class="tile-ic">${ic('chart')}</span><span class="tile-tx"><b>UITF</b><small>Unit Investment Trust Fund · No forms, just a few questions</small></span>${ic('chev-r')}</button>
+        <button class="card tile" data-act="goFund" data-kind="alfm"><span class="tile-ic">${ic('chart')}</span><span class="tile-tx"><b>ALFM</b><small>ALFM Mutual Fund · No forms, just a few questions</small></span>${ic('chev-r')}</button>`;
   }else if(S.chip==='cards'){
     content=S.hasCard
       ?`<div class="card cc"><div><small>BPI</small><b style="display:block;margin-top:2px">Rewards Credit Card</b><small>•••• 4821</small></div><div class="row-b"><small>Credit limit</small><b class="num" style="font-size:16px">${peso(150000,0)}</b></div></div>
