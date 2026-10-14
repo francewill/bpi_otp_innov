@@ -17,7 +17,8 @@ css/styles.css                  all styling
 js/data.js          constants (MISSION, BILLERS, TIERS, PATTERN…) + $ / ic / peso / pts helpers
 js/state.js         S (global state), fresh(), mtype/dstatus/todayDone
 js/nav.js           go/back/setStack/paint, toast, openSheet/closeSheet
-js/screen-*.js       one file per screen (home, hub, pay, learn, success, redeem, supp)
+js/dropzone.js      shared file-drop widget (dropField/wireDropzone) — used by screen-supp.js + screen-apply.js
+js/screen-*.js       one file per screen (home, hub, pay, learn, success, redeem, supp, apply)
 js/guide.js         side-panel walkthrough + demo shortcuts (demoGo/demoType/reset)
 js/actions.js       `A` click-dispatch table + the 3 document-level event listeners
 js/main.js          RENDER map + the bootstrap paint(true) call — must load LAST
@@ -33,10 +34,14 @@ js/main.js          RENDER map + the bootstrap paint(true) call — must load LA
 - User interaction is one delegated `click` listener in `actions.js` reading
   `data-act`/`data-*` attributes and dispatching through the `A` object —
   never attach one-off `addEventListener`s inside render functions.
-- Conditionally-eligible missions (e.g. `supp`, gated on `S.hasCard`) follow
-  the `elig()`/`suppElig()` pattern: a pure function returning
-  `{counts, tone, icon, msg}` that both the quest card and the mission screen
-  read, so "does this count today" logic lives in exactly one place.
+- Conditionally-eligible missions (`supp` gated on `S.hasCard`, `apply` gated
+  on `!S.hasCard`) follow the `elig()`/`suppElig()`/`applyElig()` pattern: a
+  pure function returning `{counts, tone, icon, msg}` that both the quest
+  card and the mission screen read, so "does this count today" logic lives
+  in exactly one place.
+- `S.ccRoute` ('pq'/'regular'/'express') simulates the bank's eligibility
+  algorithm for the `apply` mission — a demo toggle in the guide panel, not
+  real logic. Preserved across `reset()` the same way `S.hasCard` is.
 
 ## Load-order gotcha
 `js/main.js` defines the `RENDER` map (`{home:renderHome, hub:renderHub, ...}`)

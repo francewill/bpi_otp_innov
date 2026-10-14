@@ -6,34 +6,6 @@ function suppElig(){
   if(mtype(S.today)!=='supp')return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Submitting this application won’t earn points today.`};
   return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION.supp.pts} pts + ${MISSION.supp.stamp} stamp.`};
 }
-const suppDropHint=`Drop a photo of the ID here, or <span class="link-inline">browse</span>`;
-function dropField(label,idPrefix,aria){
-  return `<div class="id-field">
-    <label>${label}</label>
-    <div class="dropzone" id="${idPrefix}Drop" tabindex="0" role="button" aria-label="${aria}">
-      <input type="file" id="${idPrefix}File" accept="image/*,.pdf" hidden>
-      <span class="ic">${ic('arrow-up')}</span>
-      <span id="${idPrefix}Text">${suppDropHint}</span>
-    </div>
-  </div>`;
-}
-function wireDropzone(idPrefix){
-  const drop=$('#'+idPrefix+'Drop'),file=$('#'+idPrefix+'File'),txt=$('#'+idPrefix+'Text');
-  function setFile(f){
-    if(f){drop.classList.add('has-file');txt.textContent=`Selected: ${f.name}`;}
-    else{drop.classList.remove('has-file');txt.innerHTML=suppDropHint;}
-    suppDyn();
-  }
-  drop.addEventListener('click',()=>file.click());
-  drop.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();file.click();}});
-  file.addEventListener('change',()=>setFile(file.files[0]));
-  drop.addEventListener('dragover',ev=>{ev.preventDefault();drop.classList.add('drag');});
-  drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));
-  drop.addEventListener('drop',ev=>{
-    ev.preventDefault();drop.classList.remove('drag');
-    if(ev.dataTransfer.files[0]){file.files=ev.dataTransfer.files;setFile(ev.dataTransfer.files[0]);}
-  });
-}
 function renderSupp(){
   const e=suppElig();
   const pitch=`<div class="card tip"><span class="big-ic">${ic('card')}</span><h3>Share your credit limit with family</h3>
@@ -44,7 +16,8 @@ function renderSupp(){
       <li>₱500 yearly fee applies per additional card (2nd onward)</li>
     </ul></div>`;
   if(!S.hasCard){
-    $('#suppBody').innerHTML=`${pitch}<div class="note info">${ic('info','md')}<span>${e.msg}</span></div>`;
+    $('#suppBody').innerHTML=`${pitch}<div class="note info">${ic('info','md')}<span>${e.msg}</span></div>
+      <button class="link" data-act="go" data-to="apply">Apply for a BPI credit card</button>`;
     $('#suppFoot').innerHTML=`<button class="btn btn-ghost btn-block" data-act="back">Back</button>`;
     return;
   }
@@ -55,8 +28,8 @@ function renderSupp(){
       ${dropField('Supplementary cardholder ID','suppUser','Upload a photo of the supplementary cardholder’s ID')}
     </div>`;
   $('#suppFoot').innerHTML=`<button class="btn btn-red btn-block" id="suppBtn" data-act="submitSupp" disabled>Submit application</button>`;
-  wireDropzone('suppPrimary');
-  wireDropzone('suppUser');
+  wireDropzone('suppPrimary',suppDyn);
+  wireDropzone('suppUser',suppDyn);
 }
 function suppDyn(){
   const b=$('#suppBtn');if(!b)return;

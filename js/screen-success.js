@@ -1,7 +1,13 @@
 'use strict';
 /* ---------- success ---------- */
 function sucHead(){
-  const r=S.result,map={qr:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],bill:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],save:['Money saved!',`${peso(r.amount||0)} moved to ${r.payee}`],learn:['Nice work!','You finished today’s money tip'],supp:['Application submitted!','We’ll review it and activate your supplementary card.']};
+  const r=S.result;
+  if(r.type==='apply'){
+    if(r.route==='regular')return ['Application submitted!','We’ll review your documents and get back to you within 3–5 business days.'];
+    if(r.route==='express')return ['Card approved!',`${peso(r.holdAmount||0,0)} is now on hold in your Savings Account as collateral.`];
+    return ['You’re approved!',`Your BPI credit card with a ${peso(PQ_LIMIT,0)} limit is on its way.`];
+  }
+  const map={qr:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],bill:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],save:['Money saved!',`${peso(r.amount||0)} moved to ${r.payee}`],learn:['Nice work!','You finished today’s money tip'],supp:['Application submitted!','We’ll review it and activate your supplementary card.']};
   return map[r.type];
 }
 function renderSuccess(){

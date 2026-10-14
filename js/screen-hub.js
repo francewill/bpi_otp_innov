@@ -44,9 +44,11 @@ function questCard(d){
   const t=mtype(d),m=MISSION[t],st=dstatus(d);
   const rew=`<div class="q-rew"><span class="pill gold">+${m.pts} pts</span>${m.stamp?`<span class="pill">+${m.stamp} stamp</span>`:''}</div>`;
   let act='';
-  if(st==='today')act=(t==='supp'&&!S.hasCard)
-    ?`<div class="q-state">${ic('info','md')}Available to BPI credit cardholders. Try the “Cardholder” toggle in the prototype guide.</div>`
-    :`<button class="btn btn-red btn-block" data-act="start">${m.cta}</button>`;
+  if(st==='today'){
+    if(t==='supp'&&!S.hasCard)act=`<div class="q-state">${ic('info','md')}Available to BPI credit cardholders. Try the “Cardholder” toggle in the prototype guide.</div>`;
+    else if(t==='apply'&&S.hasCard)act=`<div class="q-state ok">${ic('check','md')}You already have a BPI credit card.</div>`;
+    else act=`<button class="btn btn-red btn-block" data-act="start">${m.cta}</button>`;
+  }
   else if(st==='done')act=`<div class="q-state ok">${ic('check','md')}Completed · ${m.pts} pts earned</div>`;
   else if(st==='missed')act=`<div class="q-state">${ic('info','md')}This day has passed. Missions can only be done on the day.</div>`;
   else act=`<div class="q-state">${ic('lock','md')}Opens on ${dlabel(d)}</div>`;

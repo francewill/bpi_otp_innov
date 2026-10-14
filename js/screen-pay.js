@@ -7,6 +7,7 @@ function startMission(){
   if(t==='qr'){S.pay=mkPay('qr');go('scan');}
   else if(t==='learn'){S.learn={step:0,sel:null};go('learn');}
   else if(t==='supp'){if(!S.hasCard)return;go('supp');}
+  else if(t==='apply'){if(S.hasCard)return;go('apply');}
   else{S.pay=mkPay(t);go('pay');}
 }
 function renderScan(){

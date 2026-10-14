@@ -18,7 +18,10 @@ const A={
   redeemPick:d=>{const i=+d.i;if(S.pts>=TIERS[i].p){S.redeemSel=i;renderRedeem();}},
   redeemAsk:()=>redeemAsk(),redeemDo:()=>redeemDo(),
   submitSupp:()=>submitSupp(),
+  submitApply:()=>submitApply(),
+  holdQuick:d=>{S.holdAmt=+d.v;$('#holdAmt').value=d.v;applyDyn();},
   cardMode:d=>{S.hasCard=d.v==='1';paint(false);},
+  ccRoute:d=>{S.ccRoute=d.v;paint(false);},
   closeSheet:()=>closeSheet(),
   goHub:()=>{S.tab='quests';S.selected=S.today;setStack(['home','hub']);},
   goHome:()=>setStack(['home']),
@@ -33,9 +36,12 @@ document.addEventListener('click',e=>{
   const f=A[t.dataset.act];if(f)f(t.dataset,t);
 });
 document.addEventListener('input',e=>{
-  if(e.target.id!=='amt')return;
+  const id=e.target.id;
+  if(id!=='amt'&&id!=='holdAmt')return;
   let v=e.target.value.replace(/[^0-9.]/g,'');const i=v.indexOf('.');if(i>-1)v=v.slice(0,i+1)+v.slice(i+1).replace(/\./g,'');
   const parts=v.split('.');if(parts[1]&&parts[1].length>2)v=parts[0]+'.'+parts[1].slice(0,2);
-  e.target.value=v;S.pay.amount=parseFloat(v)||0;payDyn();
+  e.target.value=v;
+  if(id==='amt'){S.pay.amount=parseFloat(v)||0;payDyn();}
+  else{S.holdAmt=parseFloat(v)||0;applyDyn();}
 });
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheet();});
