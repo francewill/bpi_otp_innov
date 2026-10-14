@@ -7,7 +7,7 @@ function sucHead(){
     if(r.route==='express')return ['Card approved!',`${peso(r.holdAmount||0,0)} is now on hold in your Savings Account as collateral.`];
     return ['You’re approved!',`Your BPI credit card with a ${peso(PQ_LIMIT,0)} limit is on its way.`];
   }
-  const map={qr:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],bill:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],save:['Money saved!',`${peso(r.amount||0)} moved to ${r.payee}`],learn:['Nice work!','You finished today’s money tip'],supp:['Application submitted!','We’ll review it and activate your supplementary card.']};
+  const map={qr:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],bill:['Payment successful!',`${peso(r.amount||0)} paid to ${r.payee}`],save:['Money saved!',`${peso(r.amount||0)} moved to ${r.payee}`],learn:['Nice work!','You finished today’s money tip'],supp:['Application submitted!','We’ll review it and activate your supplementary card.'],inst:['Installment set up!',`${r.merchant} · ${peso(r.monthly||0)}/month for ${r.tenor} months`]};
   return map[r.type];
 }
 function renderSuccess(){

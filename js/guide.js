@@ -14,7 +14,7 @@ function guideHTML(){
       <li><button data-act="demoGo" data-v="4"><span class="n">4</span><span><b>Convert points to cashback</b><small>Confirm and see the credit</small></span></button></li>
     </ol>
     <h3>Try today’s mission as</h3>
-    <div class="seg4">${['qr','bill','save','learn','supp','apply'].map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
+    <div class="seg4">${['qr','bill','save','learn','supp','apply','inst'].map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
     <h3>Credit card status</h3>
     <div class="seg4">
       <button class="${S.hasCard?'on':''}" data-act="cardMode" data-v="1">Cardholder</button>

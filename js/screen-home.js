@@ -21,6 +21,7 @@ function renderHome(){
   }else if(S.chip==='cards'){
     content=S.hasCard
       ?`<div class="card cc"><div><small>BPI</small><b style="display:block;margin-top:2px">Rewards Credit Card</b><small>•••• 4821</small></div><div class="row-b"><small>Credit limit</small><b class="num" style="font-size:16px">${peso(150000,0)}</b></div></div>
+        <button class="card tile" data-act="go" data-to="inst"><span class="tile-ic">${ic('card')}</span><span class="tile-tx"><b>Switch a purchase to installment</b><small>Spread a big purchase over 3, 6, or 12 months</small></span>${ic('chev-r')}</button>
         <button class="card tile" data-act="go" data-to="supp"><span class="tile-ic">${ic('card')}</span><span class="tile-tx"><b>Add a supplementary card</b><small>Share your credit limit with family · Free for your first card</small></span>${ic('chev-r')}</button>`
       :`<button class="card tile" data-act="go" data-to="apply"><span class="tile-ic">${ic('card')}</span><span class="tile-tx"><b>You may be eligible for a BPI credit card</b><small>Takes less than a minute to check</small></span>${ic('chev-r')}</button>`;
   }else{

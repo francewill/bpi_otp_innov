@@ -45,7 +45,7 @@ function questCard(d){
   const rew=`<div class="q-rew"><span class="pill gold">+${m.pts} pts</span>${m.stamp?`<span class="pill">+${m.stamp} stamp</span>`:''}</div>`;
   let act='';
   if(st==='today'){
-    if(t==='supp'&&!S.hasCard)act=`<div class="q-state">${ic('info','md')}Available to BPI credit cardholders. Try the “Cardholder” toggle in the prototype guide.</div>`;
+    if((t==='supp'||t==='inst')&&!S.hasCard)act=`<div class="q-state">${ic('info','md')}Available to BPI credit cardholders. Try the “Cardholder” toggle in the prototype guide.</div>`;
     else if(t==='apply'&&S.hasCard)act=`<div class="q-state ok">${ic('check','md')}You already have a BPI credit card.</div>`;
     else act=`<button class="btn btn-red btn-block" data-act="start">${m.cta}</button>`;
   }
