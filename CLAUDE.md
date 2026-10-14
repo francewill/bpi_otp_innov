@@ -61,6 +61,18 @@ js/main.js          RENDER map + the bootstrap paint(true) call — must load LA
   logic as "Convert to cashback" — it's ongoing account management, not a
   discovery action. It uses `S.result.noReward` (also documented on
   `updateSuccess()`) to skip the reward-card block for a plain confirmation.
+- "Change today's mission" (real in-app feature, `questCard()`/
+  `missionPickerHTML()` in screen-hub.js) lets the user override
+  `S.todayType` to any MISSION key via a sheet, but the link only exists
+  inside questCard()'s `st==='today'` branch — once `dstatus()` flips to
+  'done' that whole branch (and the link with it) stops rendering, so it's
+  structurally impossible to change a completed mission, no extra guard
+  needed in the UI (though `pickMission`/`changeMission` in actions.js also
+  defensively no-op on `todayDone()`, belt-and-suspenders). This is the
+  same `S.todayType` mechanism the demo guide's "Try today's mission as"
+  switcher uses — don't confuse the two: the guide switcher is prototype
+  tooling (via `reset()`, wipes other state), this is the real feature
+  (just reassigns `S.todayType`, nothing else).
 
 ## Load-order gotcha
 `js/main.js` defines the `RENDER` map (`{home:renderHome, hub:renderHub, ...}`)

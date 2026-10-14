@@ -49,12 +49,29 @@ function questCard(d){
     else if(t==='apply'&&S.hasCard)act=`<div class="q-state ok">${ic('check','md')}You already have a BPI credit card.</div>`;
     else if((t==='uitf'||t==='alfm')&&S.hasFund)act=`<div class="q-state ok">${ic('check','md')}You already have a BPI Wealth investment account.</div>`;
     else act=`<button class="btn btn-red btn-block" data-act="start">${m.cta}</button>`;
+    // Only reachable while today's win isn't done yet — once dstatus(d) flips
+    // to 'done' this whole branch is skipped, so the link disappears on its own.
+    act+=`<button class="link" data-act="changeMission" style="margin-top:10px;font-size:15px">Change today’s mission</button>`;
   }
   else if(st==='done')act=`<div class="q-state ok">${ic('check','md')}Completed · ${m.pts} pts earned</div>`;
   else if(st==='missed')act=`<div class="q-state">${ic('info','md')}This day has passed. Missions can only be done on the day.</div>`;
   else act=`<div class="q-state">${ic('lock','md')}Opens on ${dlabel(d)}</div>`;
   const lbl=d===S.today?'Today':dlabel(d).split(',')[0];
   return `<article class="card quest"><div class="q-head"><span class="q-ic">${ic(m.icon)}</span><div><div class="q-date">${lbl} · ${dlabel(d)}</div><h3>${m.name}</h3></div></div><p>${m.desc}</p>${rew}${act}</article>`;
+}
+/* Every mission type, selectable as today's — only reachable from the
+   'today, not done yet' branch of questCard() above, so once today's win
+   is collected the sheet simply has no way to open. Picking one just sets
+   S.todayType (same mechanism the demo guide's switcher uses); eligibility
+   for gated missions (supp/apply/inst/uitf/alfm) is still enforced as
+   usual by the quest card after picking — this list doesn't pre-filter it. */
+function missionPickerHTML(){
+  const cur=mtype(S.today);
+  return `<h3>Change today’s mission</h3>
+    <div class="radios" role="radiogroup" aria-label="Choose today's mission">${Object.keys(MISSION).map(k=>{
+      const m=MISSION[k];
+      return `<button class="radio ${cur===k?'on':''}" role="radio" aria-checked="${cur===k}" data-act="pickMission" data-v="${k}"><span class="avatar">${ic(m.icon)}</span><span class="grow"><b>${m.name}</b><small>+${m.pts} pts${m.stamp?` · +${m.stamp} stamp`:''}</small></span><span class="rd"></span></button>`;
+    }).join('')}</div>`;
 }
 function stampsHTML(n,newOne){return `<div class="stamps">${Array.from({length:5},(_,i)=>`<span class="stamp ${i<n?'on':''} ${newOne&&i===n-1?'new':''}">${ic('check')}</span>`).join('')}</div>`;}
 function stampsCard(){

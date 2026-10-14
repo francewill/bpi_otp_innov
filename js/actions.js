@@ -7,6 +7,8 @@ const A={
   tab:d=>{S.tab=d.v;renderHub();},
   pick:d=>{S.selected=+d.d;renderHub();},
   start:()=>startMission(),
+  changeMission:()=>{if(todayDone())return;openSheet(missionPickerHTML());},
+  pickMission:d=>{if(todayDone())return;S.todayType=d.v;closeSheet();renderHub();},
   startQR:()=>{S.pay=mkPay('qr');go('scan');},
   scan:()=>go('pay',true),
   biller:d=>{S.pay.biller=+d.i;S.pay.amount=BILLERS[+d.i].a;renderPay();},
