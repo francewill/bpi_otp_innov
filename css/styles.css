@@ -15,20 +15,23 @@
   --scrim:rgba(18,26,33,.45);
   --shadow:0 1px 2px rgba(31,45,58,.06),0 4px 14px rgba(31,45,58,.08);
 }
-@media (prefers-color-scheme:dark){
-  :root{
-    color-scheme:dark;
-    --stage:#0B0E10; --frame:#000;
-    --home:#0F1317; --bg:#0F1317; --surface:#1A2026;
-    --ink:#E8ECEF; --ink-2:#9AA6B0; --line:#2B343C;
-    --chip:#252D34; --chip-ink:#D5DCE1;
-    --slate:#2D3944;
-    --red:#D2434A; --red-2:#E0666B; --red-tint:#3A2023;
-    --teal:#4CC3B6;
-    --gold:#F0B544; --gold-tint:#3A2E12;
-    --green:#5CC694; --green-tint:#17301F;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
-  }
+/* Light is the default everywhere, on purpose: the demo gets scanned on
+   whatever phone is in the room, and it should look the same on all of
+   them (and match the deck) rather than follow each device's dark-mode
+   setting. The dark palette below is kept but is now opt-in — it applies
+   only to <html data-theme="dark">, which nothing sets today. */
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --stage:#0B0E10; --frame:#000;
+  --home:#0F1317; --bg:#0F1317; --surface:#1A2026;
+  --ink:#E8ECEF; --ink-2:#9AA6B0; --line:#2B343C;
+  --chip:#252D34; --chip-ink:#D5DCE1;
+  --slate:#2D3944;
+  --red:#D2434A; --red-2:#E0666B; --red-tint:#3A2023;
+  --teal:#4CC3B6;
+  --gold:#F0B544; --gold-tint:#3A2E12;
+  --green:#5CC694; --green-tint:#17301F;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.35);
 }
 
 *{box-sizing:border-box}
