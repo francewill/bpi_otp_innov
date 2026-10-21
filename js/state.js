@@ -9,8 +9,9 @@ function fresh(tt){
     loanRoute:'pq',loanBiz:false,loanKind:'auto',
     hasFund:true,fundKind:'uitf',fundMarital:0,fundJob:0,fundIncome:0,fundDepositAmt:FUND_DEP_QUICK[0],
     fundHoldings:{uitf:{invested:20000,value:21850},alfm:{invested:15000,value:14100}},
+    season:'nov',seasonPick:0,seasonRef:'',
     done:new Set([1,2,3,4,5,6,8,9,11,12,13]),
-    majorDone:new Set(),
+    majorDone:new Set(),seasonDone:new Set(),
     check:{salary:true,bill:tt!=='bill',pay:false},
     ledger:[11,12,13].concat([9,8,6,5,4,3,2,1]).sort((a,b)=>b-a).map(d=>({id:d,title:MISSION[PATTERN[d-1]].name,date:'Nov '+d,pts:MISSION[PATTERN[d-1]].pts,status:'confirmed'}))
            .concat([{id:0,title:'Rewards from earlier months',date:'Before Nov',pts:19000,status:'confirmed'}]),
@@ -33,3 +34,6 @@ const majorDoneElig=k=>({counts:false,tone:'info',icon:'check',tag:'Completed',
   msg:`You already earned “${MISSION[k].name}” this cycle. It unlocks again on ${MAJOR_CYCLE.next}.`});
 const majorOpenElig=k=>({counts:true,tone:'ok',icon:'gift',tag:'Open',
   msg:`Counts as a major mission. You’ll earn ${MISSION[k].pts} pts + ${MISSION[k].stamp} stamp — no daily deadline.`});
+/* ---------- seasonal campaign: the current month's, once per campaign ---------- */
+const season=()=>SEASON[S.season]||SEASON[SEASON_KEYS[0]];
+const seasonDone=()=>S.seasonDone.has(season().mission);

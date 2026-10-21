@@ -14,7 +14,9 @@ const dlabel=d=>`${wd(d)}, Nov ${d}`;
    kind:'daily' — everyday banking actions. Exactly one is active per date,
      assigned by the bank from PATTERN below; it has to be done on the day.
    kind:'major' — one-off product milestones. No date, no daily deadline:
-     each can be earned once per 6-month cycle (MAJOR_CYCLE). */
+     each can be earned once per 6-month cycle (MAJOR_CYCLE).
+   kind:'season' — the month's campaign, one per calendar month. Reached
+     only from the seasonal banner; see SEASON below for its presentation. */
 const MISSION={
   qr:{kind:'daily',name:'Pay with QR Ph',short:'QR pay',desc:'Pay ₱400 or more at any QR Ph merchant.',min:400,pts:100,stamp:1,cta:'Scan to pay',icon:'qr'},
   bill:{kind:'daily',name:'Pay a bill',short:'Pay bill',desc:'Pay any bill of ₱300 or more through BPI.',min:300,pts:100,stamp:1,cta:'Choose a biller',icon:'bill'},
@@ -27,13 +29,61 @@ const MISSION={
   housing:{kind:'major',name:'Apply for a housing loan',short:'Housing loan',desc:'Finance a home purchase — subject to credit evaluation and approval.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'home'},
   moto:{kind:'major',name:'Apply for a motorcycle loan',short:'Moto loan',desc:'Finance a motorcycle purchase — subject to credit evaluation and approval.',min:0,pts:100,stamp:1,cta:'Check your application',icon:'moto'},
   uitf:{kind:'major',name:'Apply for a UITF fund',short:'UITF',desc:'Start investing in a BPI Unit Investment Trust Fund — no forms, just a few questions.',min:0,pts:100,stamp:1,cta:'Apply now',icon:'chart'},
-  alfm:{kind:'major',name:'Apply for an ALFM fund',short:'ALFM',desc:'Start investing in an ALFM Mutual Fund — no forms, just a few questions.',min:0,pts:100,stamp:1,cta:'Apply now',icon:'chart'}
+  alfm:{kind:'major',name:'Apply for an ALFM fund',short:'ALFM',desc:'Start investing in an ALFM Mutual Fund — no forms, just a few questions.',min:0,pts:100,stamp:1,cta:'Apply now',icon:'chart'},
+  jump:{kind:'season',name:'Jumpstart a child’s savings',short:'Jumpstart',desc:'Open a Jumpstart Savings account for a child aged 7 to 17.',min:0,pts:200,stamp:1,cta:'Join Jumpstart',icon:'coins'},
+  annual:{kind:'season',name:'Free annual fee for life',short:'Annual fee',desc:'Apply for a BPI credit card with the annual fee waived for life.',min:0,pts:200,stamp:1,cta:'Apply for the card',icon:'card'},
+  insure:{kind:'season',name:'Get covered for 2027',short:'Insurance',desc:'Start a life or non-life plan, or open a Pamana Savings account.',min:0,pts:200,stamp:1,cta:'Apply now',icon:'shield'}
 };
 const DAILY_KEYS=Object.keys(MISSION).filter(k=>MISSION[k].kind==='daily');
 const MAJOR_KEYS=Object.keys(MISSION).filter(k=>MISSION[k].kind==='major');
 // Major missions refresh every 6 months. This prototype sits inside the
 // Jul–Dec 2026 window, so the whole major list unlocks again on Jan 1, 2027.
 const MAJOR_CYCLE={label:'Jul – Dec 2026',ends:'Dec 31, 2026',next:'Jan 1, 2027'};
+
+/* ---------- seasonal campaigns ----------
+   One per calendar month, surfaced as a banner above the date strip on the
+   hub's Daily and Month tabs. Each entry carries its presentation (picture,
+   title, tagline, the plain-language definition shown after you tap it) and
+   points at the MISSION key that holds its reward. `form` picks which
+   mechanic the screen renders: 'photo' (upload + referral), 'referral'
+   (referral only) or 'plans' (pick one of PLANS).
+   `img` is the picture dropped into img/, named after the SEASON key; see
+   img/README.md for the fallback chain when it isn't there yet. */
+const SEASON_IMG_DEFAULT='img/default.svg';
+const SEASON={
+  nov:{
+    month:'November',title:'Jumpstart',tagline:'A savings account built for kids 7 to 17',
+    mission:'jump',form:'photo',img:'img/nov.jpg',
+    lede:'Jumpstart Savings is a BPI savings account in your child’s own name, for ages 7 to 17. It gets them saving early, with their own card and their own balance to watch grow.',
+    bullets:['For children aged 7 to 17','Younger than 7? It can still be opened with ABD approval','Opened by you, owned by them'],
+    how:'Send one photo of your child in their favourite Disney costume. That is the whole mechanic — no forms to fill in.',
+    done:['Your child is in!','We’ll set up the Jumpstart Savings account and message you once it’s ready.']
+  },
+  dec:{
+    month:'December',title:'Free annual fee for life',tagline:'Apply for a BPI credit card this December',
+    mission:'annual',form:'referral',img:'img/dec.jpg',
+    lede:'Apply for a basic BPI credit card this December and the annual fee is waived for as long as you keep the card — no renewal fee, ever.',
+    bullets:['Annual fee waived for life, not just the first year','Applies to the basic BPI credit card','Subject to the usual credit evaluation and approval'],
+    how:'Nothing to upload. Tap apply, and add a referral code if a friend sent you one.',
+    done:['Application submitted!','We’ll review it and come back to you. Your annual fee is already waived for life.']
+  },
+  jan:{
+    month:'January',title:'2027: Ready, Set, Secure',tagline:'Bancassurance month with AIA and BPI MS',
+    mission:'insure',form:'plans',img:'img/jan.jpg',
+    lede:'January is bancassurance month. Start the year protected — life cover with BPI AIA, non-life cover with BPI MS, or a Pamana Savings account that insures you just for keeping a balance.',
+    bullets:['Life insurance with our partner AIA','Non-life insurance with our partner BPI MS','Pamana Savings: ₱25,000 maintaining balance, life cover worth 3× your average daily balance'],
+    how:'Pick the plan you want to start with. A BPI adviser takes it from there.',
+    done:['You’re on your way!','An adviser will call you to finish the plan and confirm your coverage.']
+  }
+};
+const SEASON_KEYS=Object.keys(SEASON);
+// January's three choices. Pamana sits beside the two insurers because it is
+// sold the same way this month — a savings account that carries life cover.
+const PLANS=[
+  {n:'AIA — Life insurance',d:'Protection and savings plans from our partner BPI AIA'},
+  {n:'BPI MS — Non-life insurance',d:'Home, motor and travel coverage from BPI MS'},
+  {n:'Pamana Savings',d:'₱25,000 maintaining balance · life cover worth 3× your average daily balance'}
+];
 const MIN_HOLD=5000;      // Express Start minimum hold amount
 const PQ_LIMIT=80000;     // illustrative pre-qualified credit limit
 const HOLD_QUICK=[5000,10000,20000];

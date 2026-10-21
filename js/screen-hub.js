@@ -22,14 +22,15 @@ function renderHub(){
       const mk=st==='done'?ic('check'):st==='missed'?ic('minus'):ic(m.icon);
       return `<button class="day st-${st} ${d===S.selected?'sel':''}" data-act="pick" data-d="${d}" aria-label="${dlabel(d)}, ${m.short}, ${st}" aria-pressed="${d===S.selected}"><small>${wd(d)}</small><b class="num">${d}</b><span class="mk">${mk}</span></button>`;
     }).join('');
-    body=`<div><div class="sect-row" style="padding:0 0 8px"><h3>November 2026</h3><span class="muted" style="font-size:14px">${doneN} of ${S.today} days done</span></div><div class="days" id="days">${days}</div></div>
+    body=seasonBanner()
+      +`<div><div class="sect-row" style="padding:0 0 8px"><h3>November 2026</h3><span class="muted" style="font-size:14px">${doneN} of ${S.today} days done</span></div><div class="days" id="days">${days}</div></div>
       ${questCard(S.selected)}${majorTile()}${stampsCard()}${checklistCard()}`;
   }else if(S.tab==='month'){
     const cells=Array.from({length:30},(_,i)=>i+1).map(d=>{
       const st=dstatus(d),m=MISSION[mtype(d)];
       return `<button class="cell st-${st} ${d===S.selected?'sel':''}" data-act="pick" data-d="${d}" aria-label="${dlabel(d)}, ${m.short}, ${st}" aria-pressed="${d===S.selected}"><b class="num">${d}</b>${st==='done'?ic('check'):ic(m.icon)}</button>`;
     }).join('');
-    body=`<div class="card"><div class="row-b" style="margin-bottom:12px"><h4>November 2026</h4><span class="muted" style="font-size:14px">30 dates, a goal every day</span></div>
+    body=seasonBanner()+`<div class="card"><div class="row-b" style="margin-bottom:12px"><h4>November 2026</h4><span class="muted" style="font-size:14px">30 dates, a goal every day</span></div>
       <div class="cal">${WD.map(w=>`<span class="wh">${w[0]}</span>`).join('')}${cells}</div>
       <div class="legend"><span><i style="background:var(--green-tint);outline:1px solid var(--green)"></i>Done</span><span><i style="background:var(--red)"></i>Today</span><span><i style="background:var(--bg);border:1px solid var(--ink-2)"></i>Upcoming</span><span><i style="background:var(--bg);border:1px dashed var(--ink-2)"></i>Missed</span></div></div>${questCard(S.selected)}`;
   }else{

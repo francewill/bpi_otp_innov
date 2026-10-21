@@ -41,6 +41,7 @@
   <symbol id="i-home" viewBox="0 0 24 24"><path d="M4 11.500 12 4l8 7.500"/><path d="M6 10v10h12V10"/><path d="M10 20v-6h4v6"/></symbol>
   <symbol id="i-moto" viewBox="0 0 24 24"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M6 17h5l2-5h4M13 12l2 5M9 17l3-6"/></symbol>
   <symbol id="i-chart" viewBox="0 0 24 24"><path d="M3 17l5-5 4 4 7-8"/><path d="M15 6h4v4"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.400 3.300 7.600 8 9 4.700-1.400 8-4.600 8-9V6z"/><path d="m8.800 12 2.200 2.400 4.200-4.800"/></symbol>
 </svg>
 
 <main class="stage">
@@ -81,6 +82,17 @@
         <button class="ib" data-act="how" aria-label="How Daily Wins works"><svg class="ic"><use href="#i-info"/></svg></button>
       </div>
       <div class="scroll"><div class="stack" id="hubBody"></div></div>
+    </section>
+
+    <!-- SEASONAL CAMPAIGN (this month's banner offer) -->
+    <section class="screen" id="s-season" aria-label="Seasonal campaign">
+      <div class="appbar">
+        <button class="ib" data-act="back" aria-label="Back"><svg class="ic"><use href="#i-chev-l"/></svg></button>
+        <h2 id="seasonTitle">Seasonal</h2>
+        <span class="ib"></span>
+      </div>
+      <div class="scroll"><div class="stack" id="seasonBody"></div></div>
+      <div class="foot" id="seasonFoot"></div>
     </section>
 
     <!-- QR SCANNER -->
@@ -246,6 +258,7 @@
 <script src="js/screen-ploan.js"></script>
 <script src="js/screen-loan.js"></script>
 <script src="js/screen-fund.js"></script>
+<script src="js/screen-season.js"></script>
 <script src="js/guide.js"></script>
 <script src="js/actions.js"></script>
 <script src="js/main.js"></script>

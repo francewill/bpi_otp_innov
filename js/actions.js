@@ -8,6 +8,9 @@ const A={
   pick:d=>{S.selected=+d.d;renderHub();},
   start:()=>startMission(),
   startMajor:d=>openMission(d.k),
+  goSeason:()=>go('season'),
+  seasonPick:d=>{S.seasonPick=+d.i;renderSeason();},
+  submitSeason:()=>submitSeason(),
   startQR:()=>{S.pay=mkPay('qr');go('scan');},
   scan:()=>go('pay',true),
   biller:d=>{S.pay.biller=+d.i;S.pay.amount=BILLERS[+d.i].a;renderPay();},
@@ -41,14 +44,17 @@ const A={
   fundDepQuick:d=>{S.fundDepositAmt=+d.v;$('#fundDepAmt').value=d.v;fundDepDyn();},
   submitFundDeposit:()=>submitFundDeposit(),
   closeSheet:()=>closeSheet(),
-  goHub:()=>{S.tab='daily';S.selected=S.today;setStack(['home','hub']);},
-  goMajor:()=>{S.tab='major';setStack(['home','hub']);},
-  goHome:()=>setStack(['home']),
-  how:()=>openSheet(`<h3>How Daily Wins works</h3><ul><li><b>Daily missions</b> — one a day, picked for you from your recent banking. Complete it on the day to earn points.</li><li><b>Major missions</b> — bigger product milestones like a loan or an investment. No daily deadline: each can be earned once every 6 months.</li><li>Points show as validating first, then confirmed.</li><li>Collect stamps toward your 5-stamp milestone.</li><li>Convert points to cashback in your savings. 100 pts = ₱5.</li></ul><button class="btn btn-ghost btn-block" data-act="closeSheet">Got it</button>`),
+  // These three can be reached from inside a sheet (the seasonal reward
+  // popup), so they close it before navigating.
+  goHub:()=>{closeSheet();S.tab='daily';S.selected=S.today;setStack(['home','hub']);},
+  goMajor:()=>{closeSheet();S.tab='major';setStack(['home','hub']);},
+  goHome:()=>{closeSheet();setStack(['home']);},
+  how:()=>openSheet(`<h3>How Daily Wins works</h3><ul><li><b>Daily missions</b> — one a day, picked for you from your recent banking. Complete it on the day to earn points.</li><li><b>Major missions</b> — bigger product milestones like a loan or an investment. No daily deadline: each can be earned once every 6 months.</li><li><b>Seasonal campaign</b> — the banner at the top of the month. One offer per month, open to everyone, worth the most points.</li><li>Points show as validating first, then confirmed.</li><li>Collect stamps toward your 5-stamp milestone.</li><li>Convert points to cashback in your savings. 100 pts = ₱5.</li></ul><button class="btn btn-ghost btn-block" data-act="closeSheet">Got it</button>`),
   more:()=>openSheet(`<h3>Prototype controls</h3>${guideHTML()}`),
   demoGo:d=>demoGo(+d.v),
   demoType:d=>{reset(d.v);S.tab='daily';setStack(['home','hub']);},
   demoMajor:d=>{S.majorDone=d.v==='1'?new Set(MAJOR_KEYS):new Set();closeSheet();paint(false);},
+  seasonMode:d=>{S.season=d.v;closeSheet();paint(false);},
   demoReset:()=>reset()
 };
 document.addEventListener('click',e=>{
@@ -57,6 +63,9 @@ document.addEventListener('click',e=>{
 });
 document.addEventListener('input',e=>{
   const id=e.target.id;
+  // Referral code: plain text, kept short and stripped of anything that
+  // would break when the value is written back into an attribute.
+  if(id==='seasonRef'){S.seasonRef=e.target.value.replace(/[<>"'&]/g,'').slice(0,24);e.target.value=S.seasonRef;return;}
   if(id!=='amt'&&id!=='holdAmt'&&id!=='fundDepAmt')return;
   let v=e.target.value.replace(/[^0-9.]/g,'');const i=v.indexOf('.');if(i>-1)v=v.slice(0,i+1)+v.slice(i+1).replace(/\./g,'');
   const parts=v.split('.');if(parts[1]&&parts[1].length>2)v=parts[0]+'.'+parts[1].slice(0,2);

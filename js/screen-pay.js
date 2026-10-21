@@ -6,6 +6,12 @@ function mkPay(type){return {type,biller:0,amount:type==='qr'?450:BILLERS[0].a};
    list (A.startMajor). Ineligible major missions still open: their screens
    explain why and offer the way in (e.g. "Apply for a BPI credit card"). */
 function openMission(t){
+  const m=MISSION[t];
+  if(m&&m.kind==='season'){
+    const k=SEASON_KEYS.find(x=>SEASON[x].mission===t);
+    if(k)S.season=k;
+    go('season');return;
+  }
   if(t==='qr'){S.pay=mkPay('qr');go('scan');}
   else if(t==='learn'){S.learn={step:0,sel:null};go('learn');}
   else if(t==='supp')go('supp');
@@ -66,12 +72,14 @@ function submitPay(){
 /* Shared by every mission. Points, stamps and the ledger entry work the
    same either way; what differs is what gets marked off — a daily mission
    closes today's date (and feeds the streak + November checklist), a major
-   mission is struck off the 6-month cycle list instead. */
+   mission is struck off the 6-month cycle list, a seasonal one off the
+   month's campaign. */
 function earn(type){
   const m=MISSION[type],id=S.uid++,st=S;
   S.ledger.unshift({id,title:m.name,date:'Nov '+S.today,pts:m.pts,status:'pending'});
   S.pendingPts+=m.pts;
   if(m.kind==='major')S.majorDone.add(type);
+  else if(m.kind==='season')S.seasonDone.add(type);
   else{
     S.done.add(S.today);S.streak++;
     if(type==='qr')S.check.pay=true;if(type==='bill')S.check.bill=true;
@@ -83,4 +91,8 @@ function earn(type){
     e.status='confirmed';S.pts+=e.pts;S.pendingPts-=e.pts;refreshTop();
   },1800);
 }
-function refreshTop(){const top=S.stack[S.stack.length-1];if(top==='success')updateSuccess();else(RENDER[top]||(()=>{}))();}
+function refreshTop(){
+  const top=S.stack[S.stack.length-1];
+  if(top==='success')updateSuccess();else(RENDER[top]||(()=>{}))();
+  repaintSheet();
+}

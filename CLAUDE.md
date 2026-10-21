@@ -14,16 +14,20 @@ are blocked by CORS on `file://`).
 ```
 BPI_Daily_Wins_Prototype.html   shell: markup, icon <symbol> sprite, <link>/<script> tags
 css/styles.css                  all styling
+img/                seasonal banner pictures + the default fallback — see img/README.md
 js/data.js          constants (MISSION, DAILY_KEYS/MAJOR_KEYS, MAJOR_CYCLE, BILLERS,
                     TIERS, PATTERN…) + $ / ic / peso / pts helpers
 js/state.js         S (global state), fresh(), mtype/dstatus/todayDone,
                     nMajor/cycleDaysLeft/majorDoneElig/majorOpenElig
 js/nav.js           go/back/setStack/paint, toast, openSheet/closeSheet
-js/dropzone.js      shared file-drop widget (dropField/wireDropzone) — used by screen-supp.js + screen-apply.js
+js/dropzone.js      shared file-drop widget (dropField/wireDropzone) — used by screen-supp.js,
+                    screen-apply.js, screen-ploan.js, screen-loan.js, screen-season.js
 js/screen-*.js       one file per screen, except where siblings share one file (screen-redeem.js
                      covers redeem+done; screen-fund.js covers fundApply+fundDeposit — both pairs
                      are tightly related sub-screens of the same feature):
-                     home, hub, pay, learn, success, redeem, supp, apply, inst, ploan, loan, fund.
+                     home, hub, pay, learn, success, redeem, supp, apply, inst, ploan, loan, fund, season.
+                     screen-season.js owns the month's campaign: the banner the hub renders,
+                     the campaign screen, and its reward sheet.
                      screen-pay.js covers the daily qr/bill missions and owns openMission() + earn().
                      screen-loan.js is shared by auto/housing/moto via S.loanKind (all major missions).
                      screen-fund.js covers BPI Wealth (UITF/ALFM): applying is a major mission and
@@ -33,7 +37,7 @@ js/actions.js       `A` click-dispatch table + the 3 document-level event listen
 js/main.js          RENDER map + the bootstrap paint(true) call — must load LAST
 ```
 
-## Two kinds of mission
+## Three kinds of mission
 `MISSION` (data.js) is one table split by a `kind` field, and `DAILY_KEYS` /
 `MAJOR_KEYS` are derived from it — never hardcode either list.
 - **daily** (`qr`/`bill`/`learn`) — one per date, assigned by the bank via
@@ -47,12 +51,32 @@ js/main.js          RENDER map + the bootstrap paint(true) call — must load LA
   keys already earned, and the whole set unlocks again on `MAJOR_CYCLE.next`.
   They live on the hub's **Major** tab (`majorCycleCard()`/`majorList()` in
   screen-hub.js) and are also reachable from the Home product tabs.
+- **season** (`jump`/`annual`/`insure`) — the month's campaign, one per
+  calendar month, worth the most points (200). Defined in `SEASON`
+  (data.js), which pairs the MISSION key with its presentation — picture,
+  title, tagline, plain-language `lede`/`bullets`, the `how` mechanic and
+  the `done` confirmation copy. `S.seasonDone` holds campaigns already
+  joined. It deliberately has **no hub tab**: `seasonBanner()` renders above
+  the date strip on both the Daily and Month tabs, and opens `s-season`.
+  `form` picks the mechanic the screen renders — `'photo'` (upload +
+  referral), `'referral'`, or `'plans'` (pick one of `PLANS`).
 
-`earn()` (screen-pay.js) is shared by both and branches on `m.kind` — that's
-the only place the difference is written down.
+`earn()` (screen-pay.js) is shared by all three and branches on `m.kind` —
+that's the only place the difference is written down. `openMission(t)` is
+likewise total over MISSION: it routes a season key to `s-season` (setting
+`S.season` to the matching campaign) rather than falling through to the pay
+screen.
 
 There is deliberately no `save` mission: moving money into a goal is covered
 by the `uitf`/`alfm` investment missions.
+
+Seasonal missions are the one flow that confirms in a **sheet** instead of
+the success screen, because applying never leaves the campaign.
+`openSheet()` accepts a function as well as a string; passing
+`seasonRewardHTML` keeps the sheet live so `repaintSheet()` (called from
+`refreshTop`) can flip its points chip from validating to confirmed without
+the user dismissing it. `sucHead()` has no entry for season types — its
+fallback only exists so an unmapped result can't throw.
 
 ## The pattern (don't reinvent it)
 - One global mutable object `S` is the entire app state.
@@ -87,10 +111,12 @@ by the `uitf`/`alfm` investment missions.
   `apply`, `S.loanRoute` ('pq'/'regular') for `ploan`, and `S.hasFund`
   (boolean) for `uitf`/`alfm` — the last one is a prototype simplification:
   it covers both funds together rather than tracking them independently.
-  The guide's other switchers are progress, not toggles, so they are *not*
-  preserved: "Try today's daily mission as" reassigns `S.todayType` through
-  `reset()` (daily keys only), and "Major mission progress" fills or clears
-  `S.majorDone`.
+  `S.season` ('nov'/'dec'/'jan') is a fourth preserved toggle: the real app
+  would show only the live month's campaign, so this exists purely to
+  preview all three. The guide's other switchers are progress, not toggles,
+  so they are *not* preserved: "Try today's daily mission as" reassigns
+  `S.todayType` through `reset()` (daily keys only), and "Major mission
+  progress" fills or clears `S.majorDone`.
 - Every mission today is part of the points economy (same +100 pts/+1 stamp,
   except `learn` at +50/0). Depositing more into an *existing* fund
   (`screen-fund.js`'s `fundDeposit`) is deliberately not quest-gated, same

@@ -25,5 +25,16 @@ function paint(fresh){
 }
 let toastT;
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200);}
-function openSheet(html){const w=$('#sheet');$('#sheetBody').innerHTML=`<div class="grab"></div>`+html;w.classList.add('open');w.setAttribute('aria-hidden','false');}
-function closeSheet(){const w=$('#sheet');w.classList.remove('open');w.setAttribute('aria-hidden','true');}
+/* openSheet takes either finished HTML or a function returning it. Passing
+   a function keeps the sheet live: repaintSheet() re-runs it when state
+   changes underneath (see refreshTop), which is how the seasonal reward
+   popup flips from validating to confirmed without being dismissed. */
+let sheetFn=null;
+function openSheet(html){
+  sheetFn=typeof html==='function'?html:null;
+  const w=$('#sheet');
+  $('#sheetBody').innerHTML=`<div class="grab"></div>`+(sheetFn?sheetFn():html);
+  w.classList.add('open');w.setAttribute('aria-hidden','false');
+}
+function closeSheet(){sheetFn=null;const w=$('#sheet');w.classList.remove('open');w.setAttribute('aria-hidden','true');}
+function repaintSheet(){if(sheetFn)$('#sheetBody').innerHTML=`<div class="grab"></div>`+sheetFn();}

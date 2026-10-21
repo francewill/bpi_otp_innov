@@ -13,7 +13,11 @@ function guideHTML(){
       <li><button data-act="demoGo" data-v="3"><span class="n">3</span><span><b>Instant rewards visibility</b><small>Complete today’s mission</small></span></button></li>
       <li><button data-act="demoGo" data-v="4"><span class="n">4</span><span><b>Convert points to cashback</b><small>Confirm and see the credit</small></span></button></li>
       <li><button data-act="demoGo" data-v="5"><span class="n">5</span><span><b>Major missions</b><small>One-off milestones, ${MAJOR_CYCLE.label} cycle</small></span></button></li>
+      <li><button data-act="demoGo" data-v="6"><span class="n">6</span><span><b>Seasonal campaign</b><small>${season().month}: ${season().title}</small></span></button></li>
     </ol>
+    <h3>Seasonal campaign</h3>
+    <div class="seg4">${SEASON_KEYS.map(k=>`<button class="${S.season===k?'on':''}" data-act="seasonMode" data-v="${k}">${SEASON[k].month.slice(0,3)}</button>`).join('')}</div>
+    <p class="fine">The banner above the dates. Only the live month shows in the real app — this previews all three. Pictures live in <b>img/</b>; see the README there.</p>
     <h3>Try today’s daily mission as</h3>
     <div class="seg4">${DAILY_KEYS.map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
     <p class="fine">Normally assigned by BPI from the customer’s recent activity — there is no in-app mission picker. This toggle previews each one.</p>
@@ -51,12 +55,13 @@ function guideHTML(){
 }
 function renderPanel(){$('#panel').innerHTML=guideHTML();}
 function reset(tt){
-  const hc=S.hasCard,route=S.ccRoute,loanRoute=S.loanRoute,hasFund=S.hasFund;
+  const hc=S.hasCard,route=S.ccRoute,loanRoute=S.loanRoute,hasFund=S.hasFund,sea=S.season;
   S=fresh(tt);
   S.hasCard=hc===undefined?true:hc;
   S.ccRoute=route||'pq';
   S.loanRoute=loanRoute||'pq';
   S.hasFund=hasFund===undefined?true:hasFund;
+  S.season=sea||SEASON_KEYS[0];
   closeSheet();paint(true);
 }
 function demoGo(n){
@@ -66,4 +71,5 @@ function demoGo(n){
   if(n===3){if(todayDone())reset(S.todayType);S.tab='daily';S.selected=S.today;setStack(['home','hub']);startMission();}
   if(n===4){if(S.pts<2000)reset(S.todayType);S.redeemSel=null;setStack(['home','hub','redeem']);}
   if(n===5){S.tab='major';setStack(['home','hub']);}
+  if(n===6){S.tab='daily';S.selected=S.today;setStack(['home','hub']);}
 }
