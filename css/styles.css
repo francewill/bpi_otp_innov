@@ -164,6 +164,8 @@ input{font:inherit}
 .tile-pts small{font-size:13px;color:var(--ink-2)}
 .tile.feat{background:var(--red-tint)}
 .tile.feat .tile-ic{background:var(--red);color:#fff}
+.tile.is-done .tile-ic{background:var(--green-tint);color:var(--green)}
+.tile .ic.lk{color:var(--ink-2)}
 .empty{text-align:center;padding:28px 20px;display:flex;flex-direction:column;gap:6px;align-items:center}
 .empty b{font-size:17px}
 .empty p{color:var(--ink-2);font-size:15px}
@@ -192,7 +194,9 @@ input{font:inherit}
 .hero-note{font-size:15px;opacity:.92;display:flex;justify-content:space-between;gap:8px}
 .hero .btn{margin-top:4px}
 .seg{display:grid;grid-template-columns:repeat(3,1fr);background:var(--chip);border-radius:22px;padding:4px}
+.seg.s4{grid-template-columns:repeat(4,1fr)}
 .seg button{height:38px;border-radius:19px;text-align:center;font-weight:600;font-size:16px;color:var(--chip-ink)}
+.seg.s4 button{font-size:15px}
 .seg button.on{background:var(--slate);color:#fff}
 .days{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 10px;margin:0 -16px;scrollbar-width:none;scroll-snap-type:x proximity}
 .days::-webkit-scrollbar{display:none}

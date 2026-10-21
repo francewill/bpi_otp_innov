@@ -15,7 +15,10 @@ function renderHome(){
     const bal=S.showBal?`PHP <b class="num">${fmt(S.balance)}</b>`:'PHP <b>••••••••</b>';
     content=`<button class="card acct" data-act="toast" data-msg="Account details are not part of this prototype"><h3>SAVINGS ACCOUNT</h3><p class="mask">••••191274</p><div class="bal"><span>${bal}</span><small>Available balance</small></div></button>${dwTile()}`;
   }else if(S.chip==='rewards'){
-    content=dwTile()+`<button class="card tile" data-act="go" data-to="redeem" ${S.pts<2000?'disabled':''}><span class="tile-ic">${ic('cash')}</span><span class="tile-tx"><b>Convert to cashback</b><small>100 pts = ₱5, credited to your savings</small></span>${ic('chev-r')}</button>`;
+    const left=MAJOR_KEYS.length-nMajor();
+    content=dwTile()
+      +`<button class="card tile" data-act="goMajor"><span class="tile-ic">${ic('arrow-up')}</span><span class="tile-tx"><b>Major missions</b><small>${left?`${left} open until ${MAJOR_CYCLE.ends}`:`All done · resets ${MAJOR_CYCLE.next}`}</small></span>${ic('chev-r')}</button>`
+      +`<button class="card tile" data-act="go" data-to="redeem" ${S.pts<2000?'disabled':''}><span class="tile-ic">${ic('cash')}</span><span class="tile-tx"><b>Convert to cashback</b><small>100 pts = ₱5, credited to your savings</small></span>${ic('chev-r')}</button>`;
   }else if(S.chip==='investments'){
     content=S.hasFund
       ?Object.entries(FUNDS).map(([k,f])=>{

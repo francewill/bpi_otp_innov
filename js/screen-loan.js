@@ -1,13 +1,12 @@
 'use strict';
-/* ---------- auto / housing / motorcycle loans ----------
+/* ---------- auto / housing / motorcycle loans (major missions) ----------
    Regular-only, per spec, but — unlike an earlier draft — now part of the
    Daily Wins points economy, same as every other mission. One shared
    screen parameterized by S.loanKind ('auto'/'housing'/'moto'); LOAN_KINDS
    (data.js) holds the display label + icon, MISSION holds the quest copy. */
 function loanElig(kind){
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
-  if(mtype(S.today)!==kind)return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Submitting this application won’t earn points today.`};
-  return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION[kind].pts} pts + ${MISSION[kind].stamp} stamp.`};
+  if(S.majorDone.has(kind))return majorDoneElig(kind);
+  return majorOpenElig(kind);
 }
 function renderLoan(){
   const kind=S.loanKind||'auto',info=LOAN_KINDS[kind]||LOAN_KINDS.auto,e=loanElig(kind);
@@ -29,7 +28,7 @@ function submitLoan(){
   const file=$('#loanDocFile').files[0];
   if(!file)return;
   const kind=S.loanKind||'auto',e=loanElig(kind);
-  S.result={type:kind,counts:e.counts,entry:null,docFile:file.name};
+  S.result={type:kind,counts:e.counts,why:e.msg,entry:null,docFile:file.name};
   if(e.counts)earn(kind);
   go('success',true);
 }

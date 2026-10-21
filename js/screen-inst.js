@@ -1,10 +1,9 @@
 'use strict';
-/* ---------- installment (existing cardholders only) ---------- */
+/* ---------- installment (major mission, existing cardholders only) ---------- */
 function instElig(){
-  if(!S.hasCard)return {counts:false,tone:'info',icon:'info',msg:'Installment conversion is available to BPI credit cardholders. Apply for a BPI credit card to unlock this.'};
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
-  if(mtype(S.today)!=='inst')return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Converting a purchase won’t earn points today.`};
-  return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION.inst.pts} pts + ${MISSION.inst.stamp} stamp.`};
+  if(!S.hasCard)return {counts:false,tone:'info',icon:'info',tag:'Cardholders only',msg:'Installment conversion is available to BPI credit cardholders. Apply for a BPI credit card to unlock this.'};
+  if(S.majorDone.has('inst'))return majorDoneElig('inst');
+  return majorOpenElig('inst');
 }
 function renderInst(){
   const e=instElig();
@@ -43,7 +42,7 @@ function submitInst(){
   const item=INSTALL_ITEMS[S.instSel||0],tenor=S.instTenor||TENORS[0];
   const total=item.a+PROCESSING_FEE,monthly=total/tenor;
   const e=instElig();
-  S.result={type:'inst',counts:e.counts,entry:null,merchant:item.n,amount:item.a,fee:PROCESSING_FEE,total,tenor,monthly};
+  S.result={type:'inst',counts:e.counts,why:e.msg,entry:null,merchant:item.n,amount:item.a,fee:PROCESSING_FEE,total,tenor,monthly};
   if(e.counts)earn('inst');
   go('success',true);
 }

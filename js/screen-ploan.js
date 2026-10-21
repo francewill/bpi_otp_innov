@@ -1,9 +1,8 @@
 'use strict';
-/* ---------- personal loan (not gated on S.hasCard — available to everyone) ---------- */
+/* ---------- personal loan (major mission, not gated on S.hasCard — available to everyone) ---------- */
 function ploanElig(){
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
-  if(mtype(S.today)!=='ploan')return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Submitting this application won’t earn points today.`};
-  return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION.ploan.pts} pts + ${MISSION.ploan.stamp} stamp.`};
+  if(S.majorDone.has('ploan'))return majorDoneElig('ploan');
+  return majorOpenElig('ploan');
 }
 function renderPloan(){
   const e=ploanElig();
@@ -40,9 +39,9 @@ function submitPloan(){
   if(S.loanRoute==='regular'){
     const file=$('#ploanDocFile').files[0];
     if(!file)return;
-    S.result={type:'ploan',route:'regular',counts:e.counts,entry:null,docFile:file.name,biz:S.loanBiz};
+    S.result={type:'ploan',route:'regular',counts:e.counts,why:e.msg,entry:null,docFile:file.name,biz:S.loanBiz};
   }else{
-    S.result={type:'ploan',route:'pq',counts:e.counts,entry:null,amount:PL_PQ_AMOUNT};
+    S.result={type:'ploan',route:'pq',counts:e.counts,why:e.msg,entry:null,amount:PL_PQ_AMOUNT};
   }
   if(e.counts)earn('ploan');
   go('success',true);

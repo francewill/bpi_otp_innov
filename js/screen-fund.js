@@ -1,5 +1,5 @@
 'use strict';
-/* ---------- BPI Wealth: apply for UITF / ALFM ----------
+/* ---------- BPI Wealth: apply for UITF / ALFM (major missions) ----------
    Not gated on S.hasCard — investing isn't tied to card ownership.
    S.hasFund covers both funds together (a prototype simplification: once
    you've opened either fund, the Investments tab shows mock holdings for
@@ -8,10 +8,9 @@
    brief, all pre-filled to their first option so "just click apply"
    is literally true unless the presenter wants to change them. */
 function fundElig(kind){
-  if(S.hasFund)return {counts:false,tone:'info',icon:'check',msg:'You already have a BPI Wealth investment account.'};
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
-  if(mtype(S.today)!==kind)return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Submitting this application won’t earn points today.`};
-  return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION[kind].pts} pts + ${MISSION[kind].stamp} stamp.`};
+  if(S.hasFund)return {counts:false,tone:'info',icon:'check',tag:'Already an investor',msg:'You already have a BPI Wealth investment account.'};
+  if(S.majorDone.has(kind))return majorDoneElig(kind);
+  return majorOpenElig(kind);
 }
 function fundRadios(opts,sel,act){
   return `<div class="radios" role="radiogroup">${opts.map((o,i)=>`<button class="radio ${i===sel?'on':''}" role="radio" aria-checked="${i===sel}" data-act="${act}" data-i="${i}"><span style="flex:1"><b>${o}</b></span><span class="rd"></span></button>`).join('')}</div>`;
@@ -34,7 +33,7 @@ function renderFundApply(){
 }
 function submitFundApply(){
   const kind=S.fundKind||'uitf',e=fundElig(kind);
-  S.result={type:kind,counts:e.counts,entry:null,marital:MARITAL[S.fundMarital],job:JOB_NATURE[S.fundJob],income:INCOME_BRACKETS[S.fundIncome]};
+  S.result={type:kind,counts:e.counts,why:e.msg,entry:null,marital:MARITAL[S.fundMarital],job:JOB_NATURE[S.fundJob],income:INCOME_BRACKETS[S.fundIncome]};
   S.hasFund=true;
   if(e.counts)earn(kind);
   go('success',true);

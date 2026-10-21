@@ -1,14 +1,13 @@
 'use strict';
-/* ---------- apply for a credit card (non-holders only) ----------
+/* ---------- apply for a credit card (major mission, non-holders only) ----------
    Which of the 3 routes is offered is normally decided by BPI's own
    eligibility algorithm based on the applicant's history. Here it's a
    demo toggle (S.ccRoute) in the guide panel, so a presenter can preview
    all three without needing real account history. */
 function applyElig(){
-  if(S.hasCard)return {counts:false,tone:'info',icon:'check',msg:'You already have a BPI credit card.'};
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
-  if(mtype(S.today)!=='apply')return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Submitting this application won’t earn points today.`};
-  return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION.apply.pts} pts + ${MISSION.apply.stamp} stamp.`};
+  if(S.hasCard)return {counts:false,tone:'info',icon:'check',tag:'Already a cardholder',msg:'You already have a BPI credit card.'};
+  if(S.majorDone.has('apply'))return majorDoneElig('apply');
+  return majorOpenElig('apply');
 }
 function renderApply(){
   const e=applyElig();
@@ -63,12 +62,12 @@ function submitApply(){
   if(S.ccRoute==='regular'){
     const file=$('#incomeDocFile').files[0];
     if(!file)return;
-    S.result={type:'apply',route:'regular',counts:e.counts,entry:null,docFile:file.name};
+    S.result={type:'apply',route:'regular',counts:e.counts,why:e.msg,entry:null,docFile:file.name};
   }else if(S.ccRoute==='express'){
     if(!(S.holdAmt>=MIN_HOLD))return;
-    S.result={type:'apply',route:'express',counts:e.counts,entry:null,holdAmount:S.holdAmt};
+    S.result={type:'apply',route:'express',counts:e.counts,why:e.msg,entry:null,holdAmount:S.holdAmt};
   }else{
-    S.result={type:'apply',route:'pq',counts:e.counts,entry:null};
+    S.result={type:'apply',route:'pq',counts:e.counts,why:e.msg,entry:null};
   }
   if(e.counts)earn('apply');
   go('success',true);

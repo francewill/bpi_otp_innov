@@ -5,16 +5,24 @@ function guideHTML(){
   return `<div class="panel-in" style="display:flex;flex-direction:column;gap:18px">
     <span class="tag">Concept prototype</span>
     <h2>BPI Daily Wins</h2>
-    <p class="lead">Earn points from everyday banking and convert them to cashback. Follow the four steps from the deck.</p>
+    <p class="lead">Earn points from everyday banking and convert them to cashback. Two kinds of mission: one <b>daily</b> mission a day, assigned automatically, plus <b>major</b> product milestones that refresh every 6 months.</p>
     <h3>Walkthrough</h3>
     <ol class="steps">
       <li><button data-act="demoGo" data-v="1"><span class="n">1</span><span><b>Discover today’s mission</b><small>Banner and quest tile on the home screen</small></span></button></li>
       <li><button data-act="demoGo" data-v="2"><span class="n">2</span><span><b>A month of daily goals</b><small>Pick any of the 30 dates</small></span></button></li>
       <li><button data-act="demoGo" data-v="3"><span class="n">3</span><span><b>Instant rewards visibility</b><small>Complete today’s mission</small></span></button></li>
       <li><button data-act="demoGo" data-v="4"><span class="n">4</span><span><b>Convert points to cashback</b><small>Confirm and see the credit</small></span></button></li>
+      <li><button data-act="demoGo" data-v="5"><span class="n">5</span><span><b>Major missions</b><small>One-off milestones, ${MAJOR_CYCLE.label} cycle</small></span></button></li>
     </ol>
-    <h3>Try today’s mission as</h3>
-    <div class="seg4">${['qr','bill','save','learn','supp','apply','inst','ploan','auto','housing','moto','uitf','alfm'].map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
+    <h3>Try today’s daily mission as</h3>
+    <div class="seg4">${DAILY_KEYS.map(k=>`<button class="${cur===k?'on':''}" data-act="demoType" data-v="${k}">${MISSION[k].short}</button>`).join('')}</div>
+    <p class="fine">Normally assigned by BPI from the customer’s recent activity — there is no in-app mission picker. This toggle previews each one.</p>
+    <h3>Major mission progress</h3>
+    <div class="seg4">
+      <button class="${nMajor()?'':'on'}" data-act="demoMajor" data-v="0">All open</button>
+      <button class="${nMajor()===MAJOR_KEYS.length?'on':''}" data-act="demoMajor" data-v="1">All done</button>
+    </div>
+    <p class="fine">${nMajor()} of ${MAJOR_KEYS.length} earned this cycle. Resets ${MAJOR_CYCLE.next}.</p>
     <h3>Credit card status</h3>
     <div class="seg4">
       <button class="${S.hasCard?'on':''}" data-act="cardMode" data-v="1">Cardholder</button>
@@ -55,6 +63,7 @@ function demoGo(n){
   closeSheet();
   if(n===1){S.chip='deposits';setStack(['home']);$('#homeScroll').scrollTop=0;const c=$('#car');if(c)c.scrollLeft=0;}
   if(n===2){S.tab='month';S.selected=S.today;setStack(['home','hub']);}
-  if(n===3){if(todayDone())reset(S.todayType);S.tab='quests';S.selected=S.today;setStack(['home','hub']);startMission();}
+  if(n===3){if(todayDone())reset(S.todayType);S.tab='daily';S.selected=S.today;setStack(['home','hub']);startMission();}
   if(n===4){if(S.pts<2000)reset(S.todayType);S.redeemSel=null;setStack(['home','hub','redeem']);}
+  if(n===5){S.tab='major';setStack(['home','hub']);}
 }

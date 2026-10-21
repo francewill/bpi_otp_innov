@@ -1,10 +1,9 @@
 'use strict';
-/* ---------- supplementary card ---------- */
+/* ---------- supplementary card (major mission, gated on S.hasCard) ---------- */
 function suppElig(){
-  if(!S.hasCard)return {counts:false,tone:'info',icon:'info',msg:'Supplementary cards are available to BPI credit cardholders. Apply for a BPI credit card to unlock this.'};
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
-  if(mtype(S.today)!=='supp')return {counts:false,tone:'info',icon:'info',msg:`Today’s Daily Win is “${MISSION[mtype(S.today)].name}”. Submitting this application won’t earn points today.`};
-  return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${MISSION.supp.pts} pts + ${MISSION.supp.stamp} stamp.`};
+  if(!S.hasCard)return {counts:false,tone:'info',icon:'info',tag:'Cardholders only',msg:'Supplementary cards are available to BPI credit cardholders. Apply for a BPI credit card to unlock this.'};
+  if(S.majorDone.has('supp'))return majorDoneElig('supp');
+  return majorOpenElig('supp');
 }
 function renderSupp(){
   const e=suppElig();
@@ -41,7 +40,7 @@ function submitSupp(){
   const primary=$('#suppPrimaryFile').files[0],suppUser=$('#suppUserFile').files[0];
   if(!primary||!suppUser)return;
   const e=suppElig();
-  S.result={type:'supp',counts:e.counts,belowMin:false,entry:null,primaryIdFile:primary.name,suppIdFile:suppUser.name};
+  S.result={type:'supp',counts:e.counts,why:e.msg,belowMin:false,entry:null,primaryIdFile:primary.name,suppIdFile:suppUser.name};
   if(e.counts)earn('supp');
   go('success',true);
 }
