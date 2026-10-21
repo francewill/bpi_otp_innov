@@ -5,15 +5,16 @@ no framework, no backend** — intentional, not a shortcut. Keep it that way
 unless the user explicitly asks to add tooling or a framework.
 
 ## Run it
-Open `BPI_Daily_Wins_Prototype.html` directly in a browser (double-click or
+Open `index.html` directly in a browser (double-click or
 `open <file>`). Must keep working via `file://` with zero server — this is
 why scripts are classic `<script src>` tags, never `type="module"` (modules
 are blocked by CORS on `file://`).
 
 ## Files
 ```
-BPI_Daily_Wins_Prototype.html   shell: markup, icon <symbol> sprite, <link>/<script> tags
-css/styles.css                  all styling
+index.html          shell: markup, icon <symbol> sprite, <link>/<script> tags.
+                    Named index.html so GitHub Pages serves it at the repo root.
+css/styles.css      all styling
 img/                seasonal banner pictures + the default fallback — see img/README.md
 js/data.js          constants (MISSION, DAILY_KEYS/MAJOR_KEYS, MAJOR_CYCLE, BILLERS,
                     TIERS, PATTERN…) + $ / ic / peso / pts helpers

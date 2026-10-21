@@ -136,8 +136,8 @@ as such in the app's own copy:
 
 ## How to run it
 
-Just open `BPI_Daily_Wins_Prototype.html` in a browser — double-click it, or
-`open BPI_Daily_Wins_Prototype.html` from a terminal. No install, no build,
+Just open `index.html` in a browser — double-click it, or
+`open index.html` from a terminal. No install, no build,
 no server. It's plain HTML/CSS/JS on purpose (see `CLAUDE.md` for why and
 for the internal file/architecture map if you're editing it with an AI
 coding assistant).
