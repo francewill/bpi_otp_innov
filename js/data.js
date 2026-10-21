@@ -54,8 +54,8 @@ const SEASON={
   nov:{
     month:'November',title:'Jumpstart',tagline:'A savings account built for kids 7 to 17',
     mission:'jump',form:'photo',img:'img/nov.jpg',
-    lede:'Jumpstart Savings is a BPI savings account in your child’s own name, for ages 7 to 17. It gets them saving early, with their own card and their own balance to watch grow.',
-    bullets:['For children aged 7 to 17','Younger than 7? It can still be opened with ABD approval','Opened by you, owned by them'],
+    lede:'BPI Jumpstart Savings is a savings account designed for children aged 7 to 17, helping them develop smart saving habits and financial responsibility at an early age. With an initial deposit of just ₱100, kids can begin their savings journey while enjoying convenient banking features and financial education tools.',
+    bullets:['Opens with an initial deposit of just ₱100','Younger than 7? It can still be opened with ABD approval','Opened by you, owned by them'],
     how:'Send one photo of your child in their favourite Disney costume. That is the whole mechanic — no forms to fill in.',
     done:['Your child is in!','We’ll set up the Jumpstart Savings account and message you once it’s ready.']
   },
