@@ -44,7 +44,7 @@ function updateSuccess(first){
   const major=!!m&&m.kind==='major';
   let html='';
   if(r.counts){
-    html=`<div class="card"><div class="row-b" style="margin-bottom:2px"><h4>${major?'Major mission':'Daily Wins'} reward ${conf?'confirmed':'validating'}</h4></div>
+    html=`<div class="card"><div class="row-b" style="margin-bottom:2px"><h4>${major?'Major mission':'BPI Quest'} reward ${conf?'confirmed':'validating'}</h4></div>
       <div class="rows"><div><span>${major?'Major mission':'Today’s mission'}</span><b class="g">Completed</b></div>
       ${major?`<div><span>Unlocks again</span><b>${MAJOR_CYCLE.next}</b></div>`:''}
       ${m.stamp?`<div><span>Stamp collected</span><b>+${m.stamp} stamp</b></div>`:''}
@@ -52,14 +52,14 @@ function updateSuccess(first){
       ${m.stamp?`<div class="card"><h4>You’re getting closer to your reward!</h4>${stampsHTML(S.stamps,first&&S.lastStamp)}<p class="muted" style="font-size:15px">${left>0?`${left} more stamp${left>1?'s':''} to your 5-stamp milestone.`:'Milestone reached. Nice work.'}</p></div>`:''}
       ${unlocked?`<div class="unlock">${ic('gift')}<div><b>Your ₱1,000 cashback is ready</b><small>You have ${pts(S.pts)} pts. Convert them to cash in your savings.</small></div></div>`:''}`;
   }else if(r.belowMin){
-    html=`<div class="note warn">${ic('info','md')}<span>This payment was under ${peso(m.min,0)}, so it did not count for today’s win. You can still complete today’s mission.</span></div>`;
+    html=`<div class="note warn">${ic('info','md')}<span>This payment was under ${peso(m.min,0)}, so it did not count for today’s quest. You can still complete today’s mission.</span></div>`;
   }else{
     // r.why is the reason the mission's own elig() gave at submit time —
     // captured before earn() ran, so it still reads correctly here.
     html=`<div class="note info">${ic('info','md')}<span>${r.why||'This action did not earn reward points.'}</span></div>`;
   }
   $('#rwWrap').innerHTML=`<div class="stack" style="padding:0">${html}</div>`;
-  const backAct=major?'goMajor':'goHub',backLbl=major?'Back to major missions':'Back to Daily Wins';
+  const backAct=major?'goMajor':'goHub',backLbl=major?'Back to major missions':'Back to BPI Quest';
   $('#sucFoot').innerHTML=unlocked
     ?`<button class="btn btn-red btn-block" data-act="go" data-to="redeem">Convert to cashback</button><button class="btn btn-ghost btn-block" data-act="${backAct}">${backLbl}</button>`
     :`<button class="btn btn-red btn-block" data-act="${backAct}">${backLbl}</button><button class="btn btn-ghost btn-block" data-act="goHome">Go to accounts</button>`;

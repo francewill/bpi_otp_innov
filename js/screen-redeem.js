@@ -30,5 +30,5 @@ function renderDone(){
   $('#doneBody').innerHTML=`<div class="ok-wrap"><div class="ok-badge">${ic('check')}</div><h2>Cashback credited!</h2><div class="cash num">${peso(r.c)}</div><p>added to your Savings Account</p></div>
     <div class="card"><div class="rows"><div><span>Points used</span><b class="num">${pts(r.p)} pts</b></div><div><span>Points left</span><b class="num">${pts(r.left)} pts</b></div><div><span>Credited to</span><b>Savings ••••191274</b></div><div><span>New available balance</span><b class="num">${peso(r.bal)}</b></div></div></div>
     <p class="footnote">Prototype only. No real money moves.</p>`;
-  $('#doneFoot').innerHTML=`<button class="btn btn-red btn-block" data-act="goHub">Back to Daily Wins</button><button class="btn btn-ghost btn-block" data-act="goHome">Go to accounts</button>`;
+  $('#doneFoot').innerHTML=`<button class="btn btn-red btn-block" data-act="goHub">Back to BPI Quest</button><button class="btn btn-ghost btn-block" data-act="goHome">Go to accounts</button>`;
 }

@@ -32,9 +32,9 @@ function renderScan(){
 }
 function elig(p){
   const m=MISSION[p.type],dt=mtype(S.today);
-  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Win.'};
+  if(todayDone())return {counts:false,tone:'info',icon:'check',msg:'You already collected today’s Daily Quest.'};
   if(dt!==p.type)return {counts:false,tone:'info',icon:'info',msg:`Today’s daily mission is “${MISSION[dt].name}”. This payment won’t earn points.`};
-  if(p.amount>=m.min)return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Win. You’ll earn ${m.pts} pts + ${m.stamp} stamp.`};
+  if(p.amount>=m.min)return {counts:true,tone:'ok',icon:'gift',msg:`Counts for today’s Daily Quest. You’ll earn ${m.pts} pts + ${m.stamp} stamp.`};
   return {counts:false,tone:'warn',icon:'info',msg:`Pay ${peso(m.min,0)} or more to earn ${m.pts} pts + ${m.stamp} stamp.`};
 }
 function renderPay(){

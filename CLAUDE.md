@@ -1,4 +1,4 @@
-# BPI Daily Wins — prototype
+# BPI Quest — prototype
 
 Solo-built demo prototype (not production). Plain HTML/CSS/JS, **no build step,
 no framework, no backend** — intentional, not a shortcut. Keep it that way

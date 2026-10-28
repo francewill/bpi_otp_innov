@@ -76,7 +76,7 @@ function renderSeason(){
     `<div class="note ${e.tone}">${ic(e.icon,'md')}<span>${e.msg}</span></div>
      <p class="footnote">Concept prototype. Campaign mechanics, partners and rewards are illustrative and need Marketing and Finance sign-off.</p>`;
   $('#seasonFoot').innerHTML=done
-    ?`<button class="btn btn-ghost btn-block" data-act="goHub">Back to Daily Wins</button>`
+    ?`<button class="btn btn-ghost btn-block" data-act="goHub">Back to BPI Quest</button>`
     :`<button class="btn btn-red btn-block" id="seasonBtn" data-act="submitSeason">${m.cta}</button>`;
   if(!done&&s.form==='photo'){wireDropzone('seasonPhoto',seasonDyn);seasonDyn();}
 }

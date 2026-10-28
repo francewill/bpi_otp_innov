@@ -104,7 +104,7 @@ function stampsCard(){
 }
 function checklistCard(){
   const n=nCheck(),pct=Math.round(n/CHECKS.length*100),c=2*Math.PI*22;
-  return `<article class="card"><div class="row-b" style="align-items:center"><div><h4>Your Everyday Wins</h4><p class="muted" style="font-size:15px">November financial missions</p><p style="font-size:15px;margin-top:4px"><b>${n} of ${CHECKS.length}</b> missions completed</p></div>
+  return `<article class="card"><div class="row-b" style="align-items:center"><div><h4>Your Everyday Quests</h4><p class="muted" style="font-size:15px">November financial missions</p><p style="font-size:15px;margin-top:4px"><b>${n} of ${CHECKS.length}</b> missions completed</p></div>
     <div class="ring"><svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="28" cy="28" r="22" fill="none" stroke="var(--chip)" stroke-width="6"/><circle cx="28" cy="28" r="22" fill="none" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-dasharray="${c*pct/100} ${c}"/></svg><b class="num">${pct}%</b></div></div>
     <ul class="check-list">${CHECKS.map(([k,l])=>`<li class="${S.check[k]?'on':''}"><span class="c">${ic('check')}</span>${l}</li>`).join('')}</ul></article>`;
 }

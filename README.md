@@ -1,14 +1,14 @@
-# BPI Daily Wins — Concept Prototype
+# BPI Quest — Concept Prototype
 
 A clickable, front-end-only prototype of a gamified daily-engagement feature
 for the BPI mobile app. It simulates a single phone screen (Accounts home →
-Daily Wins hub → individual mission flows) and is meant for demos, internal
+BPI Quest hub → individual mission flows) and is meant for demos, internal
 pitches, and discussion — **not** a production build, and not connected to
 any real account, ledger, or backend.
 
 ## What the app is
 
-**Daily Wins** turns everyday banking actions into a 30-day "mission a day"
+**BPI Quest** turns everyday banking actions into a 30-day "mission a day"
 loop: each date in the demo month (November 2026) has one assigned mission.
 Completing it on its day earns points and, for most missions, a stamp toward
 a 5-stamp milestone. Points convert to real cashback at a fixed illustrative
@@ -102,7 +102,7 @@ transaction:
 ## Screens / navigation
 
 The app is a single phone-sized view with a stack-based navigation (push a
-screen on top, back pops it off): Accounts home → Daily Wins hub (with
+screen on top, back pops it off): Accounts home → BPI Quest hub (with
 Quests / Month / Activity tabs) → the specific mission screen → a shared
 success screen → optionally the cashback redemption flow. A bottom sheet is
 used for short, secondary content (the "How this works" explainer, the

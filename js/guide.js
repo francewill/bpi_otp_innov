@@ -4,7 +4,7 @@ function guideHTML(){
   const cur=S.todayType||'qr';
   return `<div class="panel-in" style="display:flex;flex-direction:column;gap:18px">
     <span class="tag">Concept prototype</span>
-    <h2>BPI Daily Wins</h2>
+    <h2>BPI Quest</h2>
     <p class="lead">Earn points from everyday banking and convert them to cashback. Two kinds of mission: one <b>daily</b> mission a day, assigned automatically, plus <b>major</b> product milestones that refresh every 6 months.</p>
     <h3>Walkthrough</h3>
     <ol class="steps">

@@ -1,7 +1,7 @@
 'use strict';
 /* ---------- auto / housing / motorcycle loans (major missions) ----------
    Regular-only, per spec, but — unlike an earlier draft — now part of the
-   Daily Wins points economy, same as every other mission. One shared
+   BPI Quest points economy, same as every other mission. One shared
    screen parameterized by S.loanKind ('auto'/'housing'/'moto'); LOAN_KINDS
    (data.js) holds the display label + icon, MISSION holds the quest copy. */
 function loanElig(kind){

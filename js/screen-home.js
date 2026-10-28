@@ -5,8 +5,8 @@ function renderHome(){
   const oc=$('#car'),cs=oc?oc.scrollLeft:0,och=$('#chips'),chs=och?och.scrollLeft:0;
   const t=mtype(S.today),m=MISSION[t],done=todayDone(),nx=MISSION[mtype(S.today+1)];
   const s1=done
-    ? slide({t:'Today’s win is collected',d:`You earned ${m.pts} pts. Tomorrow: ${nx.name.toLowerCase()}.`,l:'See my rewards',act:'go',attr:'data-to="hub"',ill:ic('gift')})
-    : slide({t:'Today’s Daily Win',d:`${m.desc.replace('.','')} to earn ${m.pts} pts${m.stamp?' + 1 stamp':''}.`,l:'Explore my mission',act:'go',attr:'data-to="hub"',ill:ic('gift')});
+    ? slide({t:'Today’s quest is collected',d:`You earned ${m.pts} pts. Tomorrow: ${nx.name.toLowerCase()}.`,l:'See my rewards',act:'go',attr:'data-to="hub"',ill:ic('gift')})
+    : slide({t:'Today’s Daily Quest',d:`${m.desc.replace('.','')} to earn ${m.pts} pts${m.stamp?' + 1 stamp':''}.`,l:'Explore my mission',act:'go',attr:'data-to="hub"',ill:ic('gift')});
   const s2=slide({t:'Have a look at your inbox',d:'Check out the personal finance insights that you have so far',l:'Go to Insights Inbox',act:'toast',attr:'data-msg="Insights Inbox is not part of this prototype"',ill:ic('wallet')+''});
   const s3=slide({t:'Pay your bills with ease',d:'Set up auto-pay for Meralco, Maynilad and more',l:'Set up auto-pay',act:'toast',attr:'data-msg="Auto-pay is not part of this prototype"',ill:ic('bill')});
   const titles={deposits:'Deposits',investments:'Investments',cards:'Cards',loans:'Loans',rewards:'Rewards'};
@@ -58,5 +58,5 @@ function renderHome(){
 }
 function dwTile(){
   const t=mtype(S.today),m=MISSION[t],done=todayDone();
-  return `<button class="card tile" data-act="go" data-to="hub"><span class="tile-ic">${ic('gift')}</span><span class="tile-tx"><b>Daily Wins</b><small>${done?'Today’s win collected':`Today: ${m.name} · +${m.pts} pts`}</small></span><span class="tile-pts"><b class="num">${pts(S.pts)}</b><small>pts</small></span></button>`;
+  return `<button class="card tile" data-act="go" data-to="hub"><span class="tile-ic">${ic('gift')}</span><span class="tile-tx"><b>BPI Quest</b><small>${done?'Today’s quest collected':`Today: ${m.name} · +${m.pts} pts`}</small></span><span class="tile-pts"><b class="num">${pts(S.pts)}</b><small>pts</small></span></button>`;
 }
