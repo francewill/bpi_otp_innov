@@ -6,7 +6,7 @@ function renderHome(){
   const t=mtype(S.today),m=MISSION[t],done=todayDone(),nx=MISSION[mtype(S.today+1)];
   const s1=done
     ? slide({t:'Today’s quest is collected',d:`You earned ${m.pts} pts. Tomorrow: ${nx.name.toLowerCase()}.`,l:'See my rewards',act:'go',attr:'data-to="hub"',ill:ic('gift')})
-    : slide({t:'Today’s Daily Quest',d:`${m.desc.replace('.','')} to earn ${m.pts} pts${m.stamp?' + 1 stamp':''}.`,l:'Explore my mission',act:'go',attr:'data-to="hub"',ill:ic('gift')});
+    : slide({t:'BPI Quest',d:`${m.desc.replace('.','')} to earn ${m.pts} pts${m.stamp?' + 1 stamp':''}.`,l:'Explore my mission',act:'go',attr:'data-to="hub"',ill:ic('gift')});
   const s2=slide({t:'Have a look at your inbox',d:'Check out the personal finance insights that you have so far',l:'Go to Insights Inbox',act:'toast',attr:'data-msg="Insights Inbox is not part of this prototype"',ill:ic('wallet')+''});
   const s3=slide({t:'Pay your bills with ease',d:'Set up auto-pay for Meralco, Maynilad and more',l:'Set up auto-pay',act:'toast',attr:'data-msg="Auto-pay is not part of this prototype"',ill:ic('bill')});
   const titles={deposits:'Deposits',investments:'Investments',cards:'Cards',loans:'Loans',rewards:'Rewards'};
